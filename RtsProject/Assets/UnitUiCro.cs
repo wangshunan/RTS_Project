@@ -1,17 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UnitUiCro : MonoBehaviour {
+public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-    public Camera rotateCamera;
+    private Animator anim;
 
-    // Use this for initialization
-    void Start () {
-        transform.rotation = rotateCamera.transform.rotation;
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void OnPointerEnter( PointerEventData data ) 
+    {
+        anim.SetTrigger("Vectory");
+        gameObject.transform.localScale *= 1.2f;
+    }
+
+    public void OnPointerExit( PointerEventData data )
+    {
+        anim.SetTrigger("UI_Idle");
+        gameObject.transform.localScale /= 1.2f;
     }
 }
