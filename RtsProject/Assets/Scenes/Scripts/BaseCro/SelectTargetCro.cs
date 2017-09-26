@@ -22,11 +22,6 @@ public class SelectTargetCro : MonoBehaviour {
 
     public void SetTarget( GameObject target )
     {
-        if ( selectTarget != null )
-        {
-            ResetTarget();
-        }
-
         selectTarget = target;
         selectTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         unitSelectCro.OnSelectPanel();
@@ -34,13 +29,20 @@ public class SelectTargetCro : MonoBehaviour {
 
     public void ResetTarget()
     {
-        if( selectTarget == null )
+        selectTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+        unitSelectCro.OffSelectPanel();
+        selectTarget = null;
+    }
+
+    public void ProUnit( string unitName )
+    {
+        if ( selectTarget == null )
         {
             return;
         }
 
-        selectTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-        unitSelectCro.OffSelectPanel();
-        selectTarget = null;
+        var targetCro = selectTarget.GetComponent<BaseCro>();
+
+        targetCro.ProductionUnit( unitName );
     }
 }

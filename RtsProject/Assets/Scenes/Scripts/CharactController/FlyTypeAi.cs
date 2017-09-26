@@ -14,9 +14,8 @@ public class FlyTypeAi : MonoBehaviour
     [SerializeField]
     AnimStateCro anim;
 
-    public GameObject garrisonBase;
-    private List<GameObject> enemys;
-    private int searchDistance;
+    private List<GameObject> targets;
+    public int searchDistance;
 
     void Awake()
     {
@@ -27,8 +26,7 @@ public class FlyTypeAi : MonoBehaviour
 
     void Start()
     {
-        enemys = new List<GameObject>();
-        searchDistance = 100;
+        targets = new List<GameObject>();
         status.type = Status.UnitType.Fly;
     }
 
@@ -40,6 +38,7 @@ public class FlyTypeAi : MonoBehaviour
         }
 
         SearchEnemy();
+        SearchBase();
         BattleCro();
     }
 
@@ -71,38 +70,67 @@ public class FlyTypeAi : MonoBehaviour
             return;
         }
 
-        string temp = null;
-        GameObject[] targets;
+        GameObject[] enemys;
 
-        if (gameObject.tag == "BLUE")
+        if (gameObject.tag == "Player")
         {
-            targets = GameObject.FindGameObjectsWithTag("RED");
+            enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
-            for (int i = 0; i < targets.Length; i++)
+            for (int i = 0; i < enemys.Length; i++)
             {
-                enemys.Add(targets[i]);
+                targets.Add(targets[i]);
             }
-
-            temp = "Player";
         }
 
-        if (gameObject.tag == "RED")
+        if (gameObject.tag == "Enemy")
         {
-            targets = GameObject.FindGameObjectsWithTag("BLUE");
+            enemys = GameObject.FindGameObjectsWithTag("Player");
 
-            for (int i = 0; i < targets.Length; i++)
+            for (int i = 0; i < enemys.Length; i++)
             {
-                enemys.Add(targets[i]);
+                targets.Add(targets[i]);
             }
-
-            temp = "MainCamera";
         }
 
-        if (TargetCheck(status.target) == null)
+        TargetCheck();
+
+    }
+
+    private void SearchBase()
+    {
+        if (status.target != null)
         {
-            status.target = GameObject.FindGameObjectWithTag(temp);// garrisonBase;
+            if (status.target.tag != "Base")
+            {
+                return;
+            }
         }
 
+        GameObject[] bases = GameObject.FindGameObjectsWithTag("Base");
+
+        if (gameObject.tag == "Player")
+        {
+            for (int i = 0; i < bases.Length; i++)
+            {
+                if (bases[i].name != "Base_Player")
+                {
+                    targets.Add(bases[i]);
+                }
+            }
+        }
+
+        if (gameObject.tag == "Enemy")
+        {
+            for (int i = 0; i < bases.Length; i++)
+            {
+                if (bases[i].name != "Base_Enemy")
+                {
+                    targets.Add(bases[i]);
+                }
+            }
+        }
+
+        TargetCheck();
     }
 
     public void Attack()
@@ -115,34 +143,28 @@ public class FlyTypeAi : MonoBehaviour
         }
     }
 
-    GameObject TargetCheck(GameObject enemy)
+    void TargetCheck()
     {
-        if (enemys.Count > 0)
+        if (targets.Count > 0)
         {
 
+            GameObject tmpTarget = null;
             float distance = 0;
-            status.target = enemys[0];
+            tmpTarget = targets[0];
 
-            for (int i = 0; i < enemys.Count - 1; i++)
+            for (int i = 0; i < targets.Count - 1; i++)
             {
-                enemy = GetMarkTarget(enemys[i + 1], status.target);
+                tmpTarget = GetMarkTarget(targets[i + 1], tmpTarget);
             }
 
-            distance = Vector3.Distance(status.target.transform.position, gameObject.transform.position);
-            enemys.Clear();
+            distance = Vector3.Distance(tmpTarget.transform.position, gameObject.transform.position);
+            targets.Clear();
 
-            if (distance >= searchDistance)
+            if (distance <= searchDistance)
             {
-                return null;
+                status.target = tmpTarget;
             }
-
         }
-        else
-        {
-            return null;
-        }
-
-        return enemy;
     }
 
     GameObject GetMarkTarget(GameObject enemyA, GameObject enemyB)

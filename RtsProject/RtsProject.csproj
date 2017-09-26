@@ -94,10 +94,13 @@
     <Compile Include="Assets\Scenes\Scripts\GameSystem\MousClickCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\ShellController\SheelCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\BaseUICro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\UI\EnergieUICro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\UI\ScoreCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\UI\ScoreManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\UnitSelectUiCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\UI\UnitUiCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\test.cs" />
-    <Compile Include="Assets\UnitUiCro.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NewSurfaceShader.shader" />

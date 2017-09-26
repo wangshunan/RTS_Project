@@ -12,7 +12,8 @@ public class Status : MonoBehaviour {
     {
         Strike,
         Shot,
-        Fly
+        Fly,
+        Base
     }
 
     public int hp;
@@ -47,7 +48,7 @@ public class Status : MonoBehaviour {
 
     private void StatusUpdate()
     {
-        if (hp <= 0)
+        if ( hp <= 0 && type != UnitType.Base )
         {
             StartCoroutine(IsDead());
         }

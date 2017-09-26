@@ -8,7 +8,7 @@ public class MousClickCro : MonoBehaviour {
     SelectTargetCro selectTarget;
 
     private GameObject ClickTarget;
-    private string targetTag;
+    private string targetName;
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class MousClickCro : MonoBehaviour {
 
     private void Start()
     {
-        targetTag = "Player_Base";
+        targetName = "Base_Player";
         ClickTarget = null;
     }
 
@@ -37,12 +37,10 @@ public class MousClickCro : MonoBehaviour {
             //マウスクリックした場所からRayを飛ばし、オブジェクトがあればtrue 
             if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
             {
-                if (hit.collider.gameObject.CompareTag(targetTag))
+                if (hit.collider.gameObject.name == targetName)
                 {
                     ClickTarget = hit.collider.gameObject;
                     selectTarget.SetTarget( ClickTarget );
-                } else {
-                    selectTarget.ResetTarget();
                 }
             }
         }
