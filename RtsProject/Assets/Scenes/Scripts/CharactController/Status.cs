@@ -24,7 +24,9 @@ public class Status : MonoBehaviour {
     public bool attacked;
     public GameObject target;
     public UnitType type;
+    public string killerTag;
 
+    private const int MAX_HP = 100;
     private void Awake () {
         anim = GetComponent<AnimStateCro>();
         isdead = false;

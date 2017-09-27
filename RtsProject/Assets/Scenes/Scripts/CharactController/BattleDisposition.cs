@@ -17,6 +17,11 @@ public class BattleDisposition : MonoBehaviour {
         if (targetCro != null)
         {
             targetCro.GetHit(status.atk);
+
+            if ( targetCro.status.hp == 0 && status.tag == "Base" )
+            {
+                targetCro.status.killerTag = gameObject.tag;
+            }
         }
     }
 

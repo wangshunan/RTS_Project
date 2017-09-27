@@ -6,12 +6,11 @@ using UnityEngine.EventSystems;
 
 public class BaseCro : MonoBehaviour {
 
-    public enum BaseType
-    {
-        Neutral,
-        Player,
-        Enemy
-    }
+    [SerializeField]
+    Status status;
+
+    [SerializeField]
+    BaseInvadCro baseInvad;
 
     private GameObject baseArea;
     private Material areaMat;
@@ -19,13 +18,13 @@ public class BaseCro : MonoBehaviour {
     private string unitTag;
     private string prefabStr;
 
-    public BaseType type;
-
     private void Awake()
     {
+        baseInvad = GameObject.Find("GameSystem").GetComponent<BaseInvadCro>();
+        status = GetComponent<Status>();
         baseArea = transform.FindChild("BaseArea").gameObject;
         areaMat = baseArea.GetComponent<Renderer>().material;
-        prefabStr = "Prefabs/";
+        prefabStr = "Prefabs/Unit/";
     }
 
     private void Start()
@@ -33,7 +32,6 @@ public class BaseCro : MonoBehaviour {
         instPos = transform.FindChild("InstPos").gameObject.transform.position;
         areaMat.SetVector("_AreaPos", gameObject.transform.position);
         baseArea.SetActive(false);
-        SetBaseTag();
     }
 
     public void SetBaseArea( bool areaSwitch )
@@ -64,21 +62,12 @@ public class BaseCro : MonoBehaviour {
         baseArea.SetActive(false);
     }
 
-    private void SetBaseTag()
+    void BaseInvaded()
     {
-        switch (type)
+        if ( status.hp <= 0 )
         {
-            case BaseType.Player:
-                gameObject.name = "Base_Player";
-                unitTag = "Player";
-                break;
-            case BaseType.Enemy:
-                gameObject.name = "Base_Enemey";
-                unitTag = "Enemy";
-                break;
-            case BaseType.Neutral:
-                gameObject.name = "Base_Neutral";
-                break;
+            gameObject.tag = "Dead";
+            baseInvad.BaseDestroy(gameObject, status.killerTag);
         }
     }
 

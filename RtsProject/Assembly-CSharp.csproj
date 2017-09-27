@@ -46,16 +46,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BaseAreaCro.cs" />
      <Compile Include="Assets\PiXel Cube World Atlantis\Scripts\TextureOffset.cs" />
+     <Compile Include="Assets\Scenes\Scripts\BaseCro\BaseCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\BaseCro\BaseInvadCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\BaseCro\SelectTargetCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\CharactController\AiType\StrikeTypeAi.cs" />
      <Compile Include="Assets\Scenes\Scripts\CharactController\AnimStateCro.cs" />
      <Compile Include="Assets\Scenes\Scripts\CharactController\BattleDisposition.cs" />
+     <Compile Include="Assets\Scenes\Scripts\CharactController\FlyTypeAi.cs" />
      <Compile Include="Assets\Scenes\Scripts\CharactController\FootManController.cs" />
      <Compile Include="Assets\Scenes\Scripts\CharactController\NavCro.cs" />
-     <Compile Include="Assets\Scenes\Scripts\CharactController\ShotType.cs" />
+     <Compile Include="Assets\Scenes\Scripts\CharactController\OperationCanvas.cs" />
+     <Compile Include="Assets\Scenes\Scripts\CharactController\ShotTypeAi.cs" />
      <Compile Include="Assets\Scenes\Scripts\CharactController\Status.cs" />
-     <Compile Include="Assets\Scenes\Scripts\CharactController\StrikeTypeAi.cs" />
+     <Compile Include="Assets\Scenes\Scripts\Input\MousClickCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\ShellController\SheelCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\BaseUICro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\EnergieUICro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\ScoreCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\ScoreManager.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\UIManager.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\UnitSelectUiCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\UI\UnitUiCro.cs" />
+     <Compile Include="Assets\Scenes\Scripts\test.cs" />
      <None Include="Assets\PiXel Cube World Atlantis\Scripts\Script read me.txt" />
      <None Include="Assets\PiXel Cube World Atlantis\Read Me.txt" />
+     <None Include="Assets\NewSurfaceShader.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity5.5.1f1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -73,9 +90,6 @@
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity5.5.1f1/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
- <Reference Include="Mono.Cecil">
- <HintPath>C:/Program Files/Unity5.5.1f1/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity5.5.1f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
