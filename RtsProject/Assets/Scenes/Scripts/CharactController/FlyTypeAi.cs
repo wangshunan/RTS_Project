@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class FlyTypeAi : MonoBehaviour
 {
-
     [SerializeField]
-    NavCro navController;
+    GameManager gameManager;
 
-    [SerializeField]
-    Status status;
-
-    [SerializeField]
-    AnimStateCro anim;
-
+    private NavCro navController;
+    private Status status;
+    private AnimStateCro anim;
     private List<GameObject> targets;
+
     public int searchDistance;
 
     void Awake()
@@ -22,6 +19,7 @@ public class FlyTypeAi : MonoBehaviour
         navController = GetComponent<NavCro>();
         status = GetComponent<Status>();
         anim = GetComponent<AnimStateCro>();
+        gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
     }
 
     void Start()
@@ -32,8 +30,14 @@ public class FlyTypeAi : MonoBehaviour
 
     void Update()
     {
-        if (status.isdead == true)
+        if ( status.isdead == true )
         {
+            return;
+        }
+
+        if ( gameManager.gameStatus != GameManager.GameStatus.Play )
+        {
+            navController.OffAiNavGation();
             return;
         }
 
@@ -49,7 +53,9 @@ public class FlyTypeAi : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(status.target.transform.position, transform.position) <= status.atkdistance)
+        var dis = Vector3.Distance(status.target.transform.position, transform.position);
+
+        if (dis <= status.atkDistance && status.target.tag != ObjNameManager.STATUS_DEAD_TAG)
         {
             navController.OffAiNavGation();
             Attack();
@@ -72,23 +78,23 @@ public class FlyTypeAi : MonoBehaviour
 
         GameObject[] enemys;
 
-        if (gameObject.tag == "Player")
+        if (gameObject.tag == ObjNameManager.UNIT_PLAYER_TAG)
         {
-            enemys = GameObject.FindGameObjectsWithTag("Enemy");
+            enemys = GameObject.FindGameObjectsWithTag(ObjNameManager.UNIT_ENEMY_TAG);
 
             for (int i = 0; i < enemys.Length; i++)
             {
-                targets.Add(targets[i]);
+                targets.Add(enemys[i]);
             }
         }
 
-        if (gameObject.tag == "Enemy")
+        if (gameObject.tag == ObjNameManager.UNIT_ENEMY_TAG)
         {
-            enemys = GameObject.FindGameObjectsWithTag("Player");
+            enemys = GameObject.FindGameObjectsWithTag(ObjNameManager.UNIT_PLAYER_TAG);
 
             for (int i = 0; i < enemys.Length; i++)
             {
-                targets.Add(targets[i]);
+                targets.Add(enemys[i]);
             }
         }
 
@@ -98,32 +104,32 @@ public class FlyTypeAi : MonoBehaviour
 
     private void SearchBase()
     {
-        if (status.target != null)
+        if (status.target != null )
         {
-            if (status.target.tag != "Base")
+            if (status.target.tag != ObjNameManager.BASE_TAG && status.target.tag != ObjNameManager.STATUS_DEAD_TAG )
             {
                 return;
             }
         }
 
-        GameObject[] bases = GameObject.FindGameObjectsWithTag("Base");
+        GameObject[] bases = GameObject.FindGameObjectsWithTag(ObjNameManager.BASE_TAG);
 
-        if (gameObject.tag == "Player")
+        if (gameObject.tag == ObjNameManager.UNIT_PLAYER_TAG)
         {
             for (int i = 0; i < bases.Length; i++)
             {
-                if (bases[i].name != "Base_Player")
+                if (bases[i].name != ObjNameManager.BASE_PLAYER_NAME)
                 {
                     targets.Add(bases[i]);
                 }
             }
         }
 
-        if (gameObject.tag == "Enemy")
+        if (gameObject.tag == ObjNameManager.UNIT_ENEMY_TAG)
         {
             for (int i = 0; i < bases.Length; i++)
             {
-                if (bases[i].name != "Base_Enemy")
+                if (bases[i].name != ObjNameManager.BASE_ENEMY_NAME)
                 {
                     targets.Add(bases[i]);
                 }
@@ -148,23 +154,36 @@ public class FlyTypeAi : MonoBehaviour
         if (targets.Count > 0)
         {
 
-            GameObject tmpTarget = null;
+            GameObject tmpTarget = targets[0];
             float distance = 0;
-            tmpTarget = targets[0];
 
-            for (int i = 0; i < targets.Count - 1; i++)
+            if (targets.Count <= 2)
             {
-                tmpTarget = GetMarkTarget(targets[i + 1], tmpTarget);
+                tmpTarget = GetMarkTarget(targets[1], tmpTarget);
+            }
+            else
+            {
+                for (int i = 0; i < targets.Count - 1; i++)
+                {
+                    tmpTarget = GetMarkTarget(targets[i + 1], tmpTarget);
+                }
             }
 
             distance = Vector3.Distance(tmpTarget.transform.position, gameObject.transform.position);
-            targets.Clear();
 
-            if (distance <= searchDistance)
+            if (distance <= searchDistance && tmpTarget.tag != ObjNameManager.BASE_TAG)
             {
                 status.target = tmpTarget;
             }
+
+            if (tmpTarget.tag == ObjNameManager.BASE_TAG)
+            {
+                status.target = tmpTarget;
+            }
+
+            targets.Clear();
         }
+
     }
 
     GameObject GetMarkTarget(GameObject enemyA, GameObject enemyB)

@@ -9,66 +9,39 @@ public class BaseCro : MonoBehaviour {
     [SerializeField]
     Status status;
 
-    [SerializeField]
-    BaseInvadCro baseInvad;
-
-    private GameObject baseArea;
-    private Material areaMat;
     private Vector3 instPos;
-    private string unitTag;
     private string prefabStr;
 
     private void Awake()
     {
-        baseInvad = GameObject.Find("GameSystem").GetComponent<BaseInvadCro>();
         status = GetComponent<Status>();
-        baseArea = transform.FindChild("BaseArea").gameObject;
-        areaMat = baseArea.GetComponent<Renderer>().material;
         prefabStr = "Prefabs/Unit/";
     }
 
     private void Start()
     {
         instPos = transform.FindChild("InstPos").gameObject.transform.position;
-        areaMat.SetVector("_AreaPos", gameObject.transform.position);
-        baseArea.SetActive(false);
     }
 
-    public void SetBaseArea( bool areaSwitch )
-    {
-        if ( areaSwitch )
-        {
-            OnBaseArea();
-        } else {
-            OffBaseArea();
-        }
-    }
     
-    public void ProductionUnit( string targetName )
+    public void PlayerProductionUnit( string name, string tag )
     {
-        string unitName = string.Concat(prefabStr, targetName);
+        string unitName = string.Concat(prefabStr, name);
         GameObject unit = Resources.Load(unitName) as GameObject;
-        unit.tag = unitTag;
+        var status = unit.GetComponent<Status>();
+
+        unit.tag = tag;
         Instantiate(unit, instPos, transform.rotation);
     }
 
-    private void OnBaseArea()
+    public void EnemyProductionUnit( string name, string tag )
     {
-        baseArea.SetActive(true);
-    }
+        string unitName = string.Concat(prefabStr, name);
+        GameObject unit = Resources.Load(unitName) as GameObject;
+        var status = unit.GetComponent<Status>();
 
-    private void OffBaseArea()
-    {
-        baseArea.SetActive(false);
-    }
-
-    void BaseInvaded()
-    {
-        if ( status.hp <= 0 )
-        {
-            gameObject.tag = "Dead";
-            baseInvad.BaseDestroy(gameObject, status.killerTag);
-        }
+        unit.tag = tag;
+        Instantiate(unit, instPos, transform.rotation);
     }
 
 }

@@ -78,29 +78,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BaseAreaCro.cs" />
     <Compile Include="Assets\PiXel Cube World Atlantis\Scripts\TextureOffset.cs" />
-    <Compile Include="Assets\Scenes\Scripts\BaseCro\BaseSelectCro\BaseCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\AIController.cs" />
+    <Compile Include="Assets\Scenes\Scripts\BaseCro\BaseCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\BaseCro\BaseInvadCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\BaseCro\ObjNameManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\BaseCro\SelectTargetCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\AiType\StrikeTypeAi.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\AnimStateCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\BattleDisposition.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\FlyTypeAi.cs" />
-    <Compile Include="Assets\Scenes\Scripts\CharactController\FootManController.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\NavCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\OperationCanvas.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\ShotTypeAi.cs" />
     <Compile Include="Assets\Scenes\Scripts\CharactController\Status.cs" />
-    <Compile Include="Assets\Scenes\Scripts\GameSystem\MousClickCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scenes\Scripts\GameTimeCountCro.cs" />
+    <Compile Include="Assets\Scenes\Scripts\GameTimeManager.cs" />
+    <Compile Include="Assets\Scenes\Scripts\Input\MousClickCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\ShellController\SheelCro.cs" />
-    <Compile Include="Assets\Scenes\Scripts\UI\BaseUICro.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\EnergieUICro.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\ScoreCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\ScoreManager.cs" />
+    <Compile Include="Assets\Scenes\Scripts\UI\TimeUiCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\UnitSelectUiCro.cs" />
     <Compile Include="Assets\Scenes\Scripts\UI\UnitUiCro.cs" />
-    <Compile Include="Assets\Scenes\Scripts\test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NewSurfaceShader.shader" />

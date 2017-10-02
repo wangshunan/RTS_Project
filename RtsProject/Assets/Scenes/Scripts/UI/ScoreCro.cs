@@ -8,6 +8,9 @@ public class ScoreCro : MonoBehaviour {
     [SerializeField]
     ScoreManager scoreManager;
 
+    [SerializeField]
+    GameManager gameManager;
+
     public enum ScoreType
     {
         Player,
@@ -15,14 +18,16 @@ public class ScoreCro : MonoBehaviour {
     }
 
     public ScoreType type;
+    public const int MAX_SCORE = 3000;
+
     private Text maxScore;
     private Text nowScore;
-    private int baseQuantity;
-    private const int MAX_SCORE = 3000;
+    private int baseAmount;
     private float score;
 
     private void Awake()
     {
+        gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
         scoreManager = GameObject.Find("GameSystem").GetComponent<ScoreManager>();
         maxScore = transform.FindChild("MaxScore").gameObject.GetComponent<Text>();
         nowScore = transform.FindChild("NowScore").gameObject.GetComponent<Text>();
@@ -37,33 +42,46 @@ public class ScoreCro : MonoBehaviour {
 
     private void Update()
     {
-        BaseQTYUpdate();
+        if ( gameManager.gameStatus != GameManager.GameStatus.Play )
+        {
+            return;
+        }
+
+        BaseAMTUpdate();
         ScoreUpdate();
     }
 
-    private void BaseQTYUpdate()
+    private void BaseAMTUpdate()
     {
         switch(type)
         {
             case ScoreType.Player:
-                baseQuantity =  scoreManager.GetPlayerBase();
+                baseAmount =  scoreManager.GetPlayerBase();
                 break;
             case ScoreType.Enemy:
-                baseQuantity = scoreManager.GetEnemyBase();
+                baseAmount = scoreManager.GetEnemyBase();
                 break;
         }
     }
 
     private void ScoreUpdate()
     {
-        score += (6 * baseQuantity * Time.deltaTime);
+        score += 6 * baseAmount * Time.deltaTime;
 
         if ( score >= MAX_SCORE )
         {
             score = MAX_SCORE;
         }
 
+        if ( type == ScoreType.Player )
+        {
+            scoreManager.playerScore = score;
+        } else {
+            scoreManager.enemyScore = score;
+        }
+
         nowScore.text = ((int)score).ToString();
+
     }
 
 }

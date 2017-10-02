@@ -4,47 +4,55 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour {
 
-
-    private int playerBases;
-    private int enemyBases;
+    public int playerBaseAmount;
+    public int enemyBasesAmount;
+    public float playerScore;
+    public float enemyScore;
 
     private void Start()
     {
-        playerBases = 0;
-        enemyBases = 0;
+        playerBaseAmount = 0;
+        enemyBasesAmount = 0;
+        playerScore = 0;
+        enemyScore = 0;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         SearchBase();
     }
 
     private void SearchBase()
     {
-        GameObject[] temBases;
+        GameObject[] tmpBases;
+        int tmpPlayerBases = 0;
+        int tmpEnemyBases = 0;
 
-        temBases = GameObject.FindGameObjectsWithTag("Base");
-        for (int i = 0; i < temBases.Length; i++)
+        tmpBases = GameObject.FindGameObjectsWithTag("Base");
+        for (int i = 0; i < tmpBases.Length; i++)
         {
-            if (temBases[i].name == "Base_Player")
+            if (tmpBases[i].name == "Base_Player")
             {
-                playerBases ++;
+                tmpPlayerBases++;
             }
 
-            if (temBases[i].name == "Base_Enemy")
+            if (tmpBases[i].name == "Base_Enemy")
             {
-                playerBases ++;
+                tmpEnemyBases++;
             }
         }
+
+        playerBaseAmount = tmpPlayerBases;
+        enemyBasesAmount = tmpEnemyBases;
     }
 
     public int GetPlayerBase()
     {
-        return playerBases;
+        return playerBaseAmount;
     }
 
     public int GetEnemyBase()
     {
-        return enemyBases;
+        return enemyBasesAmount;
     }
 }

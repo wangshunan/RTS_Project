@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsProject", "Assembly-CSharp.csproj", "{E091AAE7-310C-C2DF-A7FA-7180D6D8B145}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsProject", "RtsProject.csproj", "{EDD50618-C1E3-7E17-3664-C71258818F95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E091AAE7-310C-C2DF-A7FA-7180D6D8B145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E091AAE7-310C-C2DF-A7FA-7180D6D8B145}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E091AAE7-310C-C2DF-A7FA-7180D6D8B145}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E091AAE7-310C-C2DF-A7FA-7180D6D8B145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD50618-C1E3-7E17-3664-C71258818F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD50618-C1E3-7E17-3664-C71258818F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD50618-C1E3-7E17-3664-C71258818F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD50618-C1E3-7E17-3664-C71258818F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

@@ -4,35 +4,56 @@ using UnityEngine;
 
 public class BaseInvadCro : MonoBehaviour {
 
+    [SerializeField]
+    GameManager gameManager;
+
+    [SerializeField]
+    UnitSelectUiCro unitSelectCro;
+
     private Vector3 desBasePos;
     private string baseName;
-    private int baseType;
+
+    private void Awake()
+    {
+        unitSelectCro = GameObject.Find("UnitSelectPanel").GetComponent<UnitSelectUiCro>();
+        gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
+    }
 
     public void BaseDestroy( GameObject desBase, string unitTag )
     {
-        if (unitTag == "Player")
+        if ( unitTag == ObjNameManager.UNIT_PLAYER_TAG )
         {
-            baseName = "Base_Enemy";
+            baseName = ObjNameManager.BASE_PLAYER_NAME;
         } else {
-            baseName = "Base_Player";
+            baseName = ObjNameManager.BASE_ENEMY_NAME;
         }
+
+        if ( desBase.tag == ObjNameManager.BASE_PLAYER_NAME )
+        {
+            unitSelectCro.OffSelectPanel();
+        }
+
         desBasePos = desBase.transform.position;
-        DestroyBase(desBase);
+        Destroy(desBase);
+        StartCoroutine(Creation());
     }
 
     public void BaseCreation()
     {
-        GameObject newBase = Resources.Load("Prefabs/Base/Base") as GameObject;
-        newBase.tag = "Base";
-        newBase.name = baseName;
+        if ( gameManager.gameStatus != GameManager.GameStatus.Play )
+        {
+            return;
+        }
 
-        Instantiate(newBase, desBasePos, Quaternion.identity);
+        GameObject newBase = Resources.Load("Prefabs/Base/Base") as GameObject;
+        newBase.tag = ObjNameManager.BASE_TAG;
+
+        var obj = Instantiate(newBase, desBasePos, Quaternion.identity) as GameObject;
+        obj.name = baseName;
     }
 
-    IEnumerator DestroyBase( GameObject desbase )
+    private IEnumerator Creation()
     {
-        Destroy(desbase);
-
         yield return new WaitForSeconds(3);
         BaseCreation();
     }

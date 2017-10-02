@@ -5,42 +5,48 @@ using UnityEngine.AI;
 
 public class AnimStateCro : MonoBehaviour {
 
-    [SerializeField, HideInInspector]
-    public Animator animator;
-
-    [SerializeField, HideInInspector]
+    [SerializeField]
     Status status;
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     NavMeshAgent nav;
+
+    [SerializeField]
+    GameManager gameManager;
+
+    public Animator animator;
 
     //animation status
     private int stand;
     private int[] attack = new int [2];
     private int dead;
-    private int victory;
+    private int vectory;
 
     static public AnimatorStateInfo animState;
 
     // Use this for initialization
     void Awake () {
+
+        gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
+ 
         animator = GetComponent<Animator>();
         status = GetComponent<Status>();
         nav = GetComponent<NavMeshAgent>();
+
         attack[0] = Animator.StringToHash("Attack1");
         attack[1] = Animator.StringToHash("Attack2");
         stand = Animator.StringToHash("Stand");
         dead = Animator.StringToHash("Death");
-        victory = Animator.StringToHash("Victory");
+        vectory = Animator.StringToHash("Vectory");
     }
 
     private void Update()
     {
-        if( status.isdead == true )
+        if ( status.isdead == true )
         {
             return;
         }
-
+        
         AnimaStateUpdate();
         StateCro();
     }
@@ -53,6 +59,18 @@ public class AnimStateCro : MonoBehaviour {
     void StateCro()
     {
         animator.SetFloat(stand, nav.speed == 0 ? 0 : 1.0f);
+
+        if ( gameObject.tag == ObjNameManager.UNIT_PLAYER_TAG && 
+             gameManager.gameStatus == GameManager.GameStatus.Vectory )
+        {
+            SetVectory();
+        }
+
+        if ( gameObject.tag == ObjNameManager.UNIT_ENEMY_TAG &&
+             gameManager.gameStatus == GameManager.GameStatus.Lose)
+        {
+            SetVectory();
+        }
     }
 
     public void SetDead()
@@ -65,7 +83,7 @@ public class AnimStateCro : MonoBehaviour {
         animator.SetTrigger(dead);
     }
 
-    public void SetAttack(Status.UnitType type)
+    public void SetAttack( Status.UnitType type )
     {
         switch (type)
         {
@@ -93,7 +111,7 @@ public class AnimStateCro : MonoBehaviour {
     {
         Status.UnitType targetType = status.target.GetComponent<Status>().type;
 
-        if (targetType == Status.UnitType.Fly)
+        if ( targetType == Status.UnitType.Fly )
         {
             animator.SetTrigger(attack[1]);
         }
@@ -106,5 +124,16 @@ public class AnimStateCro : MonoBehaviour {
     private void FlyAtkAnim()
     {
        animator.SetTrigger(attack[0]);
+    }
+
+    public void SetVectory()
+    {
+
+        if ( animState.fullPathHash == Animator.StringToHash("Base Layer.Vectory") )
+        {
+            return;
+        }
+
+        animator.SetTrigger(vectory);
     }
 }

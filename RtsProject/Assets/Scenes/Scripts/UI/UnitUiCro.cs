@@ -36,7 +36,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerClick( PointerEventData data )
     {
-        if (energieCro.energie.value >= unitCost)
+        if ( energieCro.energie.value >= unitCost )
         {
             selectTargetCro.ProUnit(gameObject.name);
             energieCro.ConsumeEnergie(unitCost);

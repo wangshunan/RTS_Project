@@ -5,23 +5,22 @@ using UnityEngine.UI;
 
 public class UnitSelectUiCro : MonoBehaviour {
 
-    [SerializeField]
-    Animator selectAnim;
+    private Animator selectUIAnim;
 
-    private int select = Animator.StringToHash("UnitPanel"); 
+    private int select = Animator.StringToHash("UnitPanel");
 
     private void Awake()
     {
-        selectAnim = GetComponent<Animator>();
+        selectUIAnim = GetComponent<Animator>();
     }
 
     public void OnSelectPanel()
     {
-        selectAnim.SetBool(select,true);
+        selectUIAnim.SetBool(select,true);
     }
 
     public void OffSelectPanel()
     {
-        selectAnim.SetBool(select, false);
+        selectUIAnim.SetBool(select, false);
     }
 }

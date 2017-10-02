@@ -22,6 +22,11 @@ public class SelectTargetCro : MonoBehaviour {
 
     public void SetTarget( GameObject target )
     {
+        if ( selectTarget != null )
+        {
+            ResetTarget();
+        }
+
         selectTarget = target;
         selectTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
         unitSelectCro.OnSelectPanel();
@@ -43,6 +48,6 @@ public class SelectTargetCro : MonoBehaviour {
 
         var targetCro = selectTarget.GetComponent<BaseCro>();
 
-        targetCro.ProductionUnit( unitName );
+        targetCro.PlayerProductionUnit( unitName, ObjNameManager.UNIT_PLAYER_TAG );
     }
 }

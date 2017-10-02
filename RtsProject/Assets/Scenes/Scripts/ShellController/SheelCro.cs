@@ -19,7 +19,7 @@ public class SheelCro : MonoBehaviour {
 
     void ShotShell()
     {
-        if (target.tag == "Dead")
+        if ( target.tag == ObjNameManager.STATUS_DEAD_TAG )
         {
             Destroy(gameObject);
         }
@@ -42,7 +42,7 @@ public class SheelCro : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         var targetCro = target.GetComponent<BattleDisposition>();
-        if (targetCro != null)
+        if ( targetCro != null )
         {
             targetCro.GetHit(damage);
         }

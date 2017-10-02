@@ -7,12 +7,16 @@ public class MousClickCro : MonoBehaviour {
     [SerializeField]
     SelectTargetCro selectTarget;
 
+    [SerializeField]
+    GameManager gameManager;
+
     private GameObject ClickTarget;
     private string targetName;
 
     private void Awake()
     {
         selectTarget = GetComponent<SelectTargetCro>();
+        gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
     }
 
     private void Start()
@@ -23,6 +27,10 @@ public class MousClickCro : MonoBehaviour {
 
     private void Update()
     {
+        if ( gameManager.gameStatus != GameManager.GameStatus.Play ) {
+            return;
+        }
+
         MouserClickCro();
     } 
 

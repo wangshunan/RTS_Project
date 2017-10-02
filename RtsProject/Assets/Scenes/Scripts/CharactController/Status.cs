@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Status : MonoBehaviour {
 
     [SerializeField]
-    AnimStateCro anim;
+    BaseInvadCro baseInvad;
 
     public enum UnitType
     {
@@ -16,19 +16,25 @@ public class Status : MonoBehaviour {
         Base
     }
 
+    // Public
     public int hp;
     public int atk;
-    public int atkdistance;
+    public float atkDistance;
     public float speed;
     public bool isdead;
     public bool attacked;
     public GameObject target;
+    public GameObject mainBaseTarget;
     public UnitType type;
     public string killerTag;
 
+    // Private
+    private AnimStateCro anim;
     private const int MAX_HP = 100;
+
     private void Awake () {
         anim = GetComponent<AnimStateCro>();
+        baseInvad = GameObject.Find("GameSystem").GetComponent<BaseInvadCro>();
         isdead = false;
         attacked = false;
     }
@@ -50,17 +56,28 @@ public class Status : MonoBehaviour {
 
     private void StatusUpdate()
     {
-        if ( hp <= 0 && type != UnitType.Base )
+        if ( hp <= 0 )
         {
-            StartCoroutine(IsDead());
+            if ( type == UnitType.Base )
+            {
+                BaseInvaded();
+            } else {
+                StartCoroutine(IsDead());
+            }
         }
+    }
+
+    public void BaseInvaded()
+    {
+        gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;
+        baseInvad.BaseDestroy(gameObject, killerTag);
     }
 
     private IEnumerator IsDead()
     {
         anim.SetDead();
         isdead = true;
-        gameObject.tag = "Dead";
+        gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;
         GetComponent<NavCro>().Destroy();
         yield return new WaitForSeconds(3);
         Destroy(gameObject);

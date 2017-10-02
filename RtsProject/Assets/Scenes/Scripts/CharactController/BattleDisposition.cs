@@ -7,27 +7,45 @@ public class BattleDisposition : MonoBehaviour {
     [SerializeField]
     Status status;
 
+    private GameObject shellTarget;
+
     void Awake () {
         status = GetComponent<Status>();
     }
 
 
     void Hit() {
-        var targetCro = status.target.GetComponent<BattleDisposition>();
-        if (targetCro != null)
-        {
-            targetCro.GetHit(status.atk);
 
-            if ( targetCro.status.hp == 0 && status.tag == "Base" )
-            {
-                targetCro.status.killerTag = gameObject.tag;
-            }
+        var targetBatCro = status.target.GetComponent<BattleDisposition>();
+
+        if ( targetBatCro == null )
+        {
+            return;
         }
+
+        if ( status.target.tag == "Base" )
+        {
+            targetBatCro.BaseGetHit(status.atk, gameObject.tag);
+            return;
+        }
+
+        targetBatCro.GetHit(status.atk);
+
+    }
+
+    void ShotStart()
+    {
+        shellTarget = status.target;
     }
 
     void Shot()
     {
-        GameObject shell = (GameObject)Resources.Load("Prefabs/Shell");
+        if (shellTarget == null || shellTarget != status.target)
+        {
+            return;
+        }
+
+        GameObject shell = (GameObject)Resources.Load("Prefabs/Unit/Shell");
         GameObject shellPos = gameObject.transform.FindChild("ShellPos").gameObject;
         Status.UnitType targetType = status.target.GetComponent<Status>().type;
         var shellCro = shell.GetComponent<SheelCro>();
@@ -39,6 +57,7 @@ public class BattleDisposition : MonoBehaviour {
 
         shellCro.damage = status.atk;
         shellCro.target = status.target;
+
         Instantiate(shell, shellPos.transform.position, Quaternion.identity);
     }
 
@@ -51,6 +70,17 @@ public class BattleDisposition : MonoBehaviour {
     {
         status.GetDamage( damage );
         Debug.Log("- " + damage + "!!");
+    }
+
+    public void BaseGetHit( int damage, string unitTag )
+    {
+
+        status.GetDamage(damage);
+
+        if ( status.hp <= 0 )
+        {
+            status.killerTag = unitTag;
+        }
     }
 
 }

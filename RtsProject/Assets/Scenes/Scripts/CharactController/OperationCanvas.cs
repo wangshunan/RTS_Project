@@ -8,14 +8,9 @@ public class OperationCanvas : MonoBehaviour {
     [SerializeField]
     Status status;
 
-    [SerializeField]
-    Slider hpSlider;
-
-    [SerializeField]
-    GameObject parentObject;
-
-    [SerializeField]
-    Canvas canvas;
+    private Slider hpSlider;
+    private GameObject parentObject;
+    private Canvas canvas;
 
     public Camera rotateCamera;
     private float countDown;
@@ -26,6 +21,7 @@ public class OperationCanvas : MonoBehaviour {
         parentObject = transform.parent.gameObject;   
         status = parentObject.GetComponent<Status>();
         canvas = GetComponent<Canvas>();
+        hpSlider = transform.FindChild("Panel/HpSlider").gameObject.GetComponent<Slider>();
     }
 
     private void Start()
