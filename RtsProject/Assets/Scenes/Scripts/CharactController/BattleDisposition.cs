@@ -7,7 +7,7 @@ public class BattleDisposition : MonoBehaviour {
     [SerializeField]
     Status status;
 
-    private GameObject shellTarget;
+    public GameObject shellTarget;
 
     void Awake () {
         status = GetComponent<Status>();
@@ -33,15 +33,9 @@ public class BattleDisposition : MonoBehaviour {
 
     }
 
-    void ShotStart()
-    {
-        shellTarget = status.target;
-    }
-
     void Shot()
     {
-        if (shellTarget == null || shellTarget != status.target)
-        {
+        if ( shellTarget == null ) {
             return;
         }
 
@@ -49,14 +43,20 @@ public class BattleDisposition : MonoBehaviour {
         GameObject shellPos = gameObject.transform.FindChild("ShellPos").gameObject;
         Status.UnitType targetType = status.target.GetComponent<Status>().type;
         var shellCro = shell.GetComponent<SheelCro>();
+        shell.tag = gameObject.tag;
 
         if ( targetType == Status.UnitType.Fly )
         {
             shellPos = gameObject.transform.FindChild("ShellPos_Fly").gameObject;
         }
 
-        shellCro.damage = status.atk;
-        shellCro.target = status.target;
+        if ( shellTarget.GetComponent<Status>().type == Status.UnitType.Fly ) {
+            shellCro.damage = status.atk * 2;
+        } else {
+            shellCro.damage = status.atk;
+        }
+
+        shellCro.target = shellTarget;
 
         Instantiate(shell, shellPos.transform.position, Quaternion.identity);
     }
@@ -69,7 +69,6 @@ public class BattleDisposition : MonoBehaviour {
     public void GetHit( int damage )
     {
         status.GetDamage( damage );
-        Debug.Log("- " + damage + "!!");
     }
 
     public void BaseGetHit( int damage, string unitTag )

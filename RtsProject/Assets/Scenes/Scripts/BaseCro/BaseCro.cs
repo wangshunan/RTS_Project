@@ -11,16 +11,23 @@ public class BaseCro : MonoBehaviour {
 
     private Vector3 instPos;
     private string prefabStr;
+    private Renderer render;
 
     private void Awake()
     {
         status = GetComponent<Status>();
+        render = GetComponent<Renderer>();
         prefabStr = "Prefabs/Unit/";
     }
 
     private void Start()
     {
         instPos = transform.FindChild("InstPos").gameObject.transform.position;
+        if ( gameObject.name == ObjNameManager.BASE_ENEMY_NAME) {
+            render.material.SetColor("_Color", Color.red);
+        } else {
+            render.material.SetColor("_Color", Color.white);
+        }
     }
 
     

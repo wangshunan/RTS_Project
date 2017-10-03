@@ -49,7 +49,9 @@ public class BaseInvadCro : MonoBehaviour {
         newBase.tag = ObjNameManager.BASE_TAG;
 
         var obj = Instantiate(newBase, desBasePos, Quaternion.identity) as GameObject;
+        obj.transform.Rotate(new Vector3(1, 0, 0), -90); 
         obj.name = baseName;
+
     }
 
     private IEnumerator Creation()

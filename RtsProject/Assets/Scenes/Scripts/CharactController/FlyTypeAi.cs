@@ -151,18 +151,15 @@ public class FlyTypeAi : MonoBehaviour
 
     void TargetCheck()
     {
-        if (targets.Count > 0)
-        {
+        if ( targets.Count > 0 ) {
 
             GameObject tmpTarget = targets[0];
             float distance = 0;
 
-            if (targets.Count <= 2)
+            if ( targets.Count == 2 )
             {
-                tmpTarget = GetMarkTarget(targets[1], tmpTarget);
-            }
-            else
-            {
+                tmpTarget = GetMarkTarget(targets[1], targets[0]);
+            } else {
                 for (int i = 0; i < targets.Count - 1; i++)
                 {
                     tmpTarget = GetMarkTarget(targets[i + 1], tmpTarget);
@@ -171,12 +168,12 @@ public class FlyTypeAi : MonoBehaviour
 
             distance = Vector3.Distance(tmpTarget.transform.position, gameObject.transform.position);
 
-            if (distance <= searchDistance && tmpTarget.tag != ObjNameManager.BASE_TAG)
+            if ( distance <= searchDistance && tmpTarget.tag != ObjNameManager.BASE_TAG )
             {
-                status.target = tmpTarget;
+                status.target = tmpTarget;  
             }
 
-            if (tmpTarget.tag == ObjNameManager.BASE_TAG)
+            if ( tmpTarget.tag == ObjNameManager.BASE_TAG )
             {
                 status.target = tmpTarget;
             }

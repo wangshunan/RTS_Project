@@ -24,7 +24,6 @@ public class AnimStateCro : MonoBehaviour {
 
     static public AnimatorStateInfo animState;
 
-    // Use this for initialization
     void Awake () {
 
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
@@ -85,6 +84,10 @@ public class AnimStateCro : MonoBehaviour {
 
     public void SetAttack( Status.UnitType type )
     {
+        if ( gameObject.tag == ObjNameManager.STATUS_DEAD_TAG ) {
+            return;
+        }
+
         switch (type)
         {
             case Status.UnitType.Strike:

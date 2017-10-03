@@ -7,6 +7,7 @@ public class ShotTypeAi : MonoBehaviour
     [SerializeField]
     GameManager gameManager;
 
+    private BattleDisposition battleCro;
     private NavCro navController;
     private Status status;
     private AnimStateCro anim;
@@ -20,6 +21,7 @@ public class ShotTypeAi : MonoBehaviour
         status = GetComponent<Status>();
         anim = GetComponent<AnimStateCro>();
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
+        battleCro = GetComponent<BattleDisposition>();
     }
 
     void Start()
@@ -59,11 +61,8 @@ public class ShotTypeAi : MonoBehaviour
         {
             navController.OffAiNavGation();
             Attack();
-        }
-        else
-        {
+        } else {
             navController.OnAiNavGation();
-
             navController.SetTarget(status.target);
         }
 
@@ -143,28 +142,23 @@ public class ShotTypeAi : MonoBehaviour
 
     public void Attack()
     {
-        if ( status.attacked == false )
-        {
-            transform.LookAt(status.target.transform.position);
-            anim.SetAttack(status.type);
-            status.attacked = true;
-        }
+        transform.LookAt(status.target.transform.position);
+        battleCro.shellTarget = status.target;
+        anim.SetAttack(status.type);
+        status.attacked = true;
     }
 
     void TargetCheck()
     {
-        if (targets.Count > 0)
-        {
+        if ( targets.Count > 0 ) {
 
             GameObject tmpTarget = targets[0];
             float distance = 0;
 
-            if (targets.Count <= 2)
+            if ( targets.Count == 2 )
             {
-                tmpTarget = GetMarkTarget(targets[1], tmpTarget);
-            }
-            else
-            {
+                tmpTarget = GetMarkTarget(targets[1], targets[0]);
+            } else {
                 for (int i = 0; i < targets.Count - 1; i++)
                 {
                     tmpTarget = GetMarkTarget(targets[i + 1], tmpTarget);
@@ -173,12 +167,12 @@ public class ShotTypeAi : MonoBehaviour
 
             distance = Vector3.Distance(tmpTarget.transform.position, gameObject.transform.position);
 
-            if (distance <= searchDistance && tmpTarget.tag != ObjNameManager.BASE_TAG)
+            if ( distance <= searchDistance && tmpTarget.tag != ObjNameManager.BASE_TAG )
             {
-                status.target = tmpTarget;
+                status.target = tmpTarget;  
             }
 
-            if (tmpTarget.tag == ObjNameManager.BASE_TAG)
+            if ( tmpTarget.tag == ObjNameManager.BASE_TAG )
             {
                 status.target = tmpTarget;
             }

@@ -28,7 +28,7 @@ public class SelectTargetCro : MonoBehaviour {
         }
 
         selectTarget = target;
-        selectTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        selectTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
         unitSelectCro.OnSelectPanel();
     }
 

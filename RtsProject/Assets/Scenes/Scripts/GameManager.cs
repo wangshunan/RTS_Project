@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour {
     {
         Vectory,
         Lose,
-        Play
+        Play,
+        Stop
     }
 
     public GameStatus gameStatus;
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        gameStatus = GameStatus.Play;
+        gameStatus = GameStatus.Stop;
     }
 
     private void FixedUpdate()
@@ -47,6 +48,11 @@ public class GameManager : MonoBehaviour {
             gameStatus = GameStatus.Lose;
         }
 
+        if ( scoreManager.enemyBasesAmount == 0 )
+        {
+            gameStatus = GameStatus.Vectory;
+        }
+
         if ( scoreManager.playerBaseAmount == 0 )
         {
             gameStatus = GameStatus.Lose;
@@ -64,17 +70,9 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-    }
+        if ( gameStatus != GameStatus.Play && gameStatus != GameStatus.Stop ) {
 
-
-    public void SetGameVectory()
-    {
-        gameStatus = GameStatus.Vectory;
-    }
-
-    public void SetGameLose()
-    {
-        gameStatus = GameStatus.Lose;
+        }
     }
 
 }

@@ -13,6 +13,9 @@ public class AIController : MonoBehaviour
     [SerializeField]
     private List<BaseCro> baseCro;
 
+    [SerializeField]
+    ScoreManager baseAmount;
+
     public GameObject targetBase;
 
     private float count;
@@ -23,12 +26,13 @@ public class AIController : MonoBehaviour
     {
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
         gameTimeCro = GameObject.Find("GameSystem").GetComponent<GameTimeCountCro>();
+        baseAmount = GameObject.Find("GameSystem").GetComponent<ScoreManager>();
     }
 
-    private void start()
+    private void Start()
     {
         baseCro = new List<BaseCro>();
-        unitName = "Footman_Blue";
+        unitName =  "Red/Footman";
         count = 0;
         specialCount = 0;
     }
@@ -48,22 +52,22 @@ public class AIController : MonoBehaviour
     {
         count += Time.deltaTime;
 
-        if ( count >= 5 )
+        if ( count >= 4 )
         {
             for ( int i = 0; i < baseCro.Count; i++ )
             {
-                baseCro[i].EnemyProductionUnit("Footman_Blue", ObjNameManager.UNIT_ENEMY_TAG);
+                baseCro[i].EnemyProductionUnit(unitName, ObjNameManager.UNIT_ENEMY_TAG);
             }
 
             specialCount++;
             count = 0;
         }
 
-        if ( specialCount == 4 )
+        if ( specialCount == 3 )
         {
             for (int i = 0; i < baseCro.Count; i++)
             {
-                baseCro[i].EnemyProductionUnit("Archer_Blue", ObjNameManager.UNIT_ENEMY_TAG);
+                baseCro[i].EnemyProductionUnit("Red/Archer", ObjNameManager.UNIT_ENEMY_TAG);
             }
             specialCount++;
         } 
@@ -72,15 +76,15 @@ public class AIController : MonoBehaviour
         {
             for (int i = 0; i < baseCro.Count; i++)
             {
-                baseCro[i].EnemyProductionUnit("Horseman_Blue", ObjNameManager.UNIT_ENEMY_TAG);
+                baseCro[i].EnemyProductionUnit("Red/Horseman", ObjNameManager.UNIT_ENEMY_TAG);
             }
 
             specialCount = 0;
         }
 
-        if ( gameTimeCro.nowMinute <= 1 )
+        if ( baseAmount.enemyBasesAmount == 1 )
         {
-            unitName = "Knight_Blue";
+            unitName = "Red/Knight";
         }
 
         baseCro.Clear();

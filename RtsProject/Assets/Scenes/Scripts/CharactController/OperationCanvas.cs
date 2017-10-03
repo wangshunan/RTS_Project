@@ -38,7 +38,6 @@ public class OperationCanvas : MonoBehaviour {
         LookAtCamera();
         CountDown();
         DrawSlider();
-
         hpSlider.value = status.hp;
     }
 
@@ -66,6 +65,10 @@ public class OperationCanvas : MonoBehaviour {
         {
             canvas.enabled = true;
         } else {
+            canvas.enabled = false;
+        }
+
+        if ( status.hp == 0 ) {
             canvas.enabled = false;
         }
     }

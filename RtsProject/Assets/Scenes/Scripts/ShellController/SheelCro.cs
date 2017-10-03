@@ -19,9 +19,10 @@ public class SheelCro : MonoBehaviour {
 
     void ShotShell()
     {
-        if ( target.tag == ObjNameManager.STATUS_DEAD_TAG )
+        if ( target == null )
         {
             Destroy(gameObject);
+            return;
         }
 
         Status.UnitType targetType = target.GetComponent<Status>().type;
@@ -30,9 +31,7 @@ public class SheelCro : MonoBehaviour {
 
         if ( targetType == Status.UnitType.Fly )
         {
-            targetPos = target.transform.FindChild("Hips/BodyPos").transform.position;
-
-            
+            targetPos = target.transform.FindChild("Hips/BodyPos").transform.position; 
         }
 
         transform.position = Vector3.MoveTowards(transform.position, targetPos, movespeed);
@@ -41,11 +40,21 @@ public class SheelCro : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
+
         var targetCro = target.GetComponent<BattleDisposition>();
+
         if ( targetCro != null )
         {
+            if ( target.tag == ObjNameManager.BASE_TAG )
+            {
+                targetCro.BaseGetHit(damage, gameObject.tag);
+                Destroy(gameObject);
+                return;
+            }
+
             targetCro.GetHit(damage);
         }
+
         Destroy(gameObject);
     }
 }
