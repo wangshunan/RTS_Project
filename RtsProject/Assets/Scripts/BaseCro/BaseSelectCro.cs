@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectTargetCro : MonoBehaviour {
+public class BaseSelectCro : MonoBehaviour {
 
     [SerializeField]
     UnitSelectUiCro unitSelectCro;

@@ -1,0 +1,56 @@
+script目次案内
+
+Asset
+  |
+  +--Scripts Folder
+        |
+	+--GameSystem Folder
+	|	   |
+	|          +--- GameManager.cs      // ゲームステートを管理、制御する。
+	|	   +--- GameTimeManager.cs  // ゲームの制限タイムを管理する。
+        |          +--- GameTimeCountCro.cs // ゲーム制限時間のカウント計算、タイムデータを管理する。
+　　　　|　　　　　+--- ObjNameManager.cs   // ゲーム内で、よく使われるオブジェクトの名前やタグなどの統一管理。
+        | 
+	+--CharactController Folder
+	|	   |
+	|	   +--- AiType Folder
+	|	   |	     |
+	|	   |         +--- StrikeTypeAi.cs      // 接近戦闘タイプユニットの行動AIをコントロールする。
+	|	   |	     +--- ShotTypeAi.cs        // 遠距離タイプユニットの行動AIをコントロールする。
+	|	   |         +--- FlyTypeAi.cs         // 飛行タイプユニットの行動AIをコントロールする。
+	|          +------------- AnimStateCro.cs      // キャラクターのAnimatorを管理し、制御する
+        |          +------------- Status.cs            // キャラクターのステータスを管理する
+	|	   +------------- NavCro.cs　　　      // ナビゲーションを管理し、制御する。
+	|          +------------- BattleDisposition.cs // 戦闘の処理を制御する。
+	|	   +------------- HpCanvasCro.cs       // キャラクターのHP表示UIを制御する。
+	|
+	+--BaseCro Folder
+	|	   |
+        |          +------------- BaseCro.cs       // 拠点の管理と制御。
+        |          +------------- BaseInvadCro.cs　// 拠点を占拠する時の処理。
+	|	   +------------- BaseSelectCro.cs // 拠点を選択するの処理。
+	|
+	+--Input Folder
+	|	|
+	|	+------- MousClickCro.cs // マウスをクリックするときの処理。
+	|
+	+--EnemyAi Folder
+	|	|
+	|	+------- AIController.cs // 敵のAIの制御する。
+	|
+	+--ShellController Folder
+	|	|
+	|	+------- ShellCro.cs     // ShotTypeのユニットが発射した弾の制御する。
+	|
+	+--UI Folder
+	|	|
+	|	+------- EnergieUICro.cs    // ユニット生産必要なゲージの制御する。
+	|	+------- ScoreCro.cs        // スコアの制御。
+	|	+------- ScoreManager.cs    // スコア制御必要なデータを管理する。
+	|	+------- TimeUiCro.cs       // タイムUIの制御。
+	|	+------- UnitSelectUiCro.cs // ユニットを選択するUIの制御。
+	|	+------- UnitUiCro.cs       // ユニットを選択するときの処理。
+	|
+	+--DemoScripts Folder
+		|
+		+------- MenuCro.cs         // デモ版臨時用UIの制御。

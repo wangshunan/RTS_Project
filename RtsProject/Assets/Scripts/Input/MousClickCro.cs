@@ -5,7 +5,7 @@ using UnityEngine;
 public class MousClickCro : MonoBehaviour {
 
     [SerializeField]
-    SelectTargetCro selectTarget;
+    BaseSelectCro baseSelectCro;
 
     [SerializeField]
     GameManager gameManager;
@@ -14,7 +14,7 @@ public class MousClickCro : MonoBehaviour {
 
     private void Awake()
     {
-        selectTarget = GetComponent<SelectTargetCro>();
+        baseSelectCro = GetComponent<BaseSelectCro>();
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
     }
 
@@ -45,7 +45,7 @@ public class MousClickCro : MonoBehaviour {
                 if ( hit.collider.gameObject.name == ObjNameManager.BASE_PLAYER_NAME )
                 {
                     clickTarget = hit.collider.gameObject;
-                    selectTarget.SetTarget(clickTarget);
+                    baseSelectCro.SetTarget(clickTarget);
                 }
             }
         }

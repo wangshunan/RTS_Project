@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
     [SerializeField]
-    SelectTargetCro selectTargetCro;
+    BaseSelectCro baseSelectCro;
 
     [SerializeField]
     EnergieUICro energieCro;
@@ -18,7 +18,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        selectTargetCro = GameObject.Find("GameSystem").GetComponent<SelectTargetCro>();
+        baseSelectCro = GameObject.Find("GameSystem").GetComponent<BaseSelectCro>();
         energieCro = GameObject.Find("EnergieSlider").GetComponent<EnergieUICro>();
     }
 
@@ -38,7 +38,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if ( energieCro.energie.value >= unitCost )
         {
-            selectTargetCro.ProUnit(gameObject.name);
+            baseSelectCro.ProUnit(gameObject.name);
             energieCro.ConsumeEnergie(unitCost);
         }
     }
