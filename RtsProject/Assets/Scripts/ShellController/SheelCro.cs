@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class SheelCro : MonoBehaviour {
 
+    [SerializeField]
+    GameManager gameManager;
+
     public GameObject target;
+    public string parentTag;
     public float speed;
     public int damage;
+
+    private void Awake()
+    {
+        gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
+    }
 
     private void FixedUpdate()
     {
@@ -14,6 +23,12 @@ public class SheelCro : MonoBehaviour {
     }
 
     void Update() {
+
+        if ( gameManager.gameStatus != GameManager.GameStatus.Play)
+        {
+            return;
+        }
+
         ShellCro();
 	}
 
@@ -47,7 +62,7 @@ public class SheelCro : MonoBehaviour {
         {
             if ( target.tag == ObjNameManager.BASE_TAG )
             {
-                targetCro.BaseGetHit(damage, gameObject.tag);
+                targetCro.BaseGetHit(damage, parentTag);
                 Destroy(gameObject);
                 return;
             }

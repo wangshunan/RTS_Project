@@ -53,7 +53,7 @@ public class BattleDisposition : MonoBehaviour {
         GameObject shell = (GameObject)Resources.Load(shellLink);
         GameObject shellPos = gameObject.transform.FindChild("ShellPos").gameObject;
         var shellCro = shell.GetComponent<SheelCro>();
-        //shell.tag = gameObject.tag;
+        shellCro.parentTag = gameObject.tag;
 
         if ( shellTarget.GetComponent<Status>().type == Status.UnitType.Fly ) {
             shellPos = gameObject.transform.FindChild("ShellPos_Fly").gameObject;
