@@ -40,11 +40,20 @@ public class BattleDisposition : MonoBehaviour {
             return;
         }
 
+        string shellLink = "Prefabs/Unit/";
+
+        if ( gameObject.name == "Mage")
+        {
+            shellLink = string.Concat(shellLink, "Fireball");
+        } else {
+            shellLink = string.Concat(shellLink, "Shell");
+        }
+
         // 弾を生成する
-        GameObject shell = (GameObject)Resources.Load("Prefabs/Unit/Shell");
+        GameObject shell = (GameObject)Resources.Load(shellLink);
         GameObject shellPos = gameObject.transform.FindChild("ShellPos").gameObject;
         var shellCro = shell.GetComponent<SheelCro>();
-        shell.tag = gameObject.tag;
+        //shell.tag = gameObject.tag;
 
         if ( shellTarget.GetComponent<Status>().type == Status.UnitType.Fly ) {
             shellPos = gameObject.transform.FindChild("ShellPos_Fly").gameObject;

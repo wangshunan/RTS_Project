@@ -78,6 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\EffectTest_Tmp\Scripts\Fireball.cs" />
+    <Compile Include="Assets\EffectTest_Tmp\Scripts\Spawn.cs" />
     <Compile Include="Assets\Map_Tmp\Scripts\TextureOffset.cs" />
     <Compile Include="Assets\Scripts\BaseCro\BaseCro.cs" />
     <Compile Include="Assets\Scripts\BaseCro\BaseInvadCro.cs" />

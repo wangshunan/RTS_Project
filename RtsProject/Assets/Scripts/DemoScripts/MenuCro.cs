@@ -9,10 +9,23 @@ public class MenuCro : MonoBehaviour {
     [SerializeField]
     GameManager gameManager;
 
-    public GameObject gameMenu;
-    public GameObject gameOverSprites;
+    [SerializeField]
+    private GameObject gameMenu;
+
+    [SerializeField]
+    private GameObject gameOverSprites;
+
+    [SerializeField]
+    private GameObject timePauseButton;
+
+    [SerializeField]
+    private Sprite pause;
+
+    [SerializeField]
+    private Sprite start;
 
     private Animator anim;
+    private bool onPause;
     public Sprite winSprite;
     public Sprite loseSprite;
 
@@ -27,6 +40,20 @@ public class MenuCro : MonoBehaviour {
         if (gameManager.gameStatus != GameManager.GameStatus.Stop && gameManager.gameStatus != GameManager.GameStatus.Play)
         {
             StartCoroutine(GameOverEvent());
+        }
+    }
+
+    public void OnPauseOrStart()
+    {
+        if ( onPause == false )
+        {
+            onPause = true;
+            timePauseButton.GetComponent<Image>().sprite = pause;
+            gameManager.gameStatus = GameManager.GameStatus.Stop;
+        } else {
+            onPause = false;
+            timePauseButton.GetComponent<Image>().sprite = start;
+            gameManager.gameStatus = GameManager.GameStatus.Play;
         }
     }
    
