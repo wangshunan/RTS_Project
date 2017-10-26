@@ -6,19 +6,20 @@ using UnityEngine.AI;
 public class AnimStateCro : MonoBehaviour {
 
     [SerializeField]
-    Status status;
+    Status status; // ステータス
 
     [SerializeField]
-    NavMeshAgent nav;
+    NavMeshAgent nav; // ナビゲーション
 
     [SerializeField]
     GameManager gameManager;
 
+    // アニメーション
     public Animator animator;
 
-    //animation status
+    // アニメーション status
     private int stand;
-    private int[] attack = new int [2];
+    private int[] attack = new int[2];
     private int dead;
     private int vectory;
 
@@ -50,11 +51,13 @@ public class AnimStateCro : MonoBehaviour {
         StateCro();
     }
 
+    // アニメーション状態
     void AnimaStateUpdate()
     {
         animState = animator.GetCurrentAnimatorStateInfo(0);
     }
 
+    // StateCro
     void StateCro()
     {
         animator.SetFloat(stand, nav.speed == 0 ? 0 : 1.0f);
@@ -72,6 +75,7 @@ public class AnimStateCro : MonoBehaviour {
         }
     }
 
+    // Deadアニメーション
     public void SetDead()
     {
         if ( status.isdead == true )
@@ -82,6 +86,7 @@ public class AnimStateCro : MonoBehaviour {
         animator.SetTrigger(dead);
     }
 
+    // Attackアニメーション
     public void SetAttack( Status.UnitType type )
     {
         if ( gameObject.tag == ObjNameManager.STATUS_DEAD_TAG ) {

@@ -24,6 +24,7 @@ public class Status : MonoBehaviour {
     public int atk;
     public float atkDistance;
     public float speed;
+
     public bool isdead;
     public bool attacked;
     public UnitType type;
@@ -67,6 +68,7 @@ public class Status : MonoBehaviour {
         }
     }
 
+    // Base破壊されるとき相手の情報
     public void BaseInvaded()
     {
         gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;

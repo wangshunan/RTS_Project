@@ -6,17 +6,13 @@ using UnityEngine.EventSystems;
 
 public class BaseCro : MonoBehaviour {
 
-    [SerializeField]
-    Status status;
-
     private Vector3 instPos;
-    private string playerPreLink;
-    private string enemyPreLink;
-    private Renderer render;
+    private string playerPreLink; // unit ファイルリンク
+    private string enemyPreLink; // unit ファイルリンク
+    private Renderer render; // baseRenderer
 
     private void Awake()
     {
-        status = GetComponent<Status>();
         render = GetComponent<Renderer>();
         playerPreLink = "Prefabs/Unit/PlayerTeam/";
         enemyPreLink = "Prefabs/Unit/EnemyTeam/";
@@ -25,6 +21,7 @@ public class BaseCro : MonoBehaviour {
     // base初期化
     private void Start()
     {
+        // 生成pos
         instPos = transform.FindChild("InstPos").gameObject.transform.position;
         if ( gameObject.name == ObjNameManager.BASE_ENEMY_NAME) {
             render.material.SetColor("_Color", Color.red);

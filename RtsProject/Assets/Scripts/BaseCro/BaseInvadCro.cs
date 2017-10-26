@@ -12,8 +12,8 @@ public class BaseInvadCro : MonoBehaviour {
 
     private Vector3 destBasePos;
     private string baseName;
-    private string playerBaseLik;
-    private string enemyBaseLing;
+    private string playerBaseLik; // base ファイルリンク
+    private string enemyBaseLing; // base ファイルリンク
 
     private void Awake()
     {
@@ -27,6 +27,7 @@ public class BaseInvadCro : MonoBehaviour {
         enemyBaseLing = "Prefabs/Base/Base";
     }
 
+    // Base破棄
     public void BaseDestroy( GameObject desBase, string unitTag )
     {
         string baseLink = null;
@@ -52,6 +53,7 @@ public class BaseInvadCro : MonoBehaviour {
         StartCoroutine(Creation(baseLink));
     }
 
+    // Base生成
     public void BaseCreation( string baseLink )
     {
         if ( gameManager.gameStatus != GameManager.GameStatus.Play )

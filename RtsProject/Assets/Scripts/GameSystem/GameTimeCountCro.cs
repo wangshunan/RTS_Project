@@ -7,12 +7,12 @@ public class GameTimeCountCro : MonoBehaviour {
     [SerializeField]
     GameManager gameManager;
 
-    private const int MINUTE_MAX = 3;
-    private const int SECOND_MAX = 60;
+    private const int MINUTE_MAX = 3; //　最大時間：分
+    private const int SECOND_MAX = 60; // 最大時間：秒
 
-    public int nowMinute;
-    public float nowSecond;
-    public bool timeOver;
+    public int nowMinute; // 現在の時間：分
+    public float nowSecond; // 現在の時間: 秒
+    public bool timeOver; // タイムオーバー
 
     private void Awake()
     {
@@ -36,6 +36,7 @@ public class GameTimeCountCro : MonoBehaviour {
         TimeCountUpDate();
     }
 
+    // タイムカウント
     private void TimeCountUpDate()
     {
         if ( nowSecond > 0 )
@@ -52,12 +53,14 @@ public class GameTimeCountCro : MonoBehaviour {
         }
     }
 
-
+    // 現在の時間：分
     public int GetNowMinute()
     {
         return nowMinute;
     }
 
+
+    // 現在の時間：秒
     public int GetNowSecond()
     {
         return (int)nowSecond;

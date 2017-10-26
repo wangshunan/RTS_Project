@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class NavCro : MonoBehaviour
 {
     [SerializeField]
-    private NavMeshAgent agent;
+    private NavMeshAgent agent; // navMeshAgent
 
     [SerializeField]
     private Status status;
@@ -19,7 +19,7 @@ public class NavCro : MonoBehaviour
 
     private void Start()
     {
-        agent.speed = status.speed;
+        agent.speed = status.speed; 
     }
 
     public void OnAiNavGation()
@@ -46,11 +46,13 @@ public class NavCro : MonoBehaviour
 
     }
 
+    // ナビゲーションコンポーネント破棄
     public void Destroy()
     {
         Destroy(agent);
     }
 
+    // ターゲット設定
     public void SetTarget(GameObject target)
     {
         agent.SetDestination(target.transform.position);

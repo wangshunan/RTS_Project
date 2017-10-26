@@ -8,9 +8,6 @@ public class AIController : MonoBehaviour
     GameManager gameManager;
 
     [SerializeField]
-    GameTimeCountCro gameTimeCro;
-
-    [SerializeField]
     private List<BaseCro> baseCro;
 
     [SerializeField]
@@ -18,14 +15,13 @@ public class AIController : MonoBehaviour
 
     public GameObject targetBase;
 
-    private float count;
-    private float specialCount;
+    private float count; // 生成カウント
+    private float specialCount; // 特殊ユニットの生成カウント
     private string unitName;
 
     private void Awake()
     {
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
-        gameTimeCro = GameObject.Find("GameSystem").GetComponent<GameTimeCountCro>();
         baseAmount = GameObject.Find("GameSystem").GetComponent<ScoreManager>();
     }
 
@@ -48,6 +44,7 @@ public class AIController : MonoBehaviour
         UnitProduction();
     }
 
+    // ユニット生成コントロール
     private void UnitProduction()
     {
         count += Time.deltaTime;
@@ -90,6 +87,7 @@ public class AIController : MonoBehaviour
 
     }
 
+    // Base探す
     private void SearchBase()
     {
         GameObject[] bases;

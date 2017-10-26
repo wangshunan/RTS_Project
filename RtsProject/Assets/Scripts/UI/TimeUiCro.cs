@@ -28,10 +28,19 @@ public class TimeUiCro : MonoBehaviour {
 
     private void Update()
     {
+        string timeViewStr = null;
         nowMinute = gameTimeCro.GetNowMinute();
         nowSecond = gameTimeCro.GetNowSecond();
 
-        string timeViewStr = nowMinute + ":" + nowSecond;
+
+        if ( nowSecond >= 10 )
+        {
+            timeViewStr = nowMinute + ":" + nowSecond;
+        } else
+        {
+            timeViewStr = nowMinute + ":" + "0" + nowSecond;
+        } 
+
         timeText.text = timeViewStr;
     }
 }

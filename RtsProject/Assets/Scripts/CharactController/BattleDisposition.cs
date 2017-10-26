@@ -14,7 +14,7 @@ public class BattleDisposition : MonoBehaviour {
         status = GetComponent<Status>();
     }
 
-
+    // attack
     private void Hit() {
 
         var targetBatCro = status.target.GetComponent<BattleDisposition>();
@@ -34,6 +34,7 @@ public class BattleDisposition : MonoBehaviour {
 
     }
 
+    // shotAttack
     private void Shot()
     {
         if ( shellTarget == null ) {
@@ -55,6 +56,7 @@ public class BattleDisposition : MonoBehaviour {
         var shellCro = shell.GetComponent<SheelCro>();
         shellCro.parentTag = gameObject.tag;
 
+        // FlytypeかどうかAtkの設定
         if ( shellTarget.GetComponent<Status>().type == Status.UnitType.Fly ) {
             shellPos = gameObject.transform.FindChild("ShellPos_Fly").gameObject;
             shellCro.damage = status.atk * 2;
@@ -67,6 +69,7 @@ public class BattleDisposition : MonoBehaviour {
         Instantiate(shell, shellPos.transform.position, Quaternion.identity);
     }
 
+    // Attackリセット
     private void AttackReset()
     {
         status.attacked = false;

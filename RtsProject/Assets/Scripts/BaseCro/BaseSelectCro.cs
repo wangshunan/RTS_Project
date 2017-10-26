@@ -16,7 +16,7 @@ public class BaseSelectCro : MonoBehaviour {
         unitSelectCro = GameObject.Find("UnitSelectPanel").GetComponent<UnitSelectUiCro>();
     }
 	
-
+    // ターゲット設定
     public void SetTarget( GameObject target )
     {
         if (selectBaseTarget != null )
@@ -29,6 +29,7 @@ public class BaseSelectCro : MonoBehaviour {
         unitSelectCro.OnSelectPanel();
     }
 
+    // ターゲットリセット
     public void ResetTarget()
     {
         selectBaseTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.white);

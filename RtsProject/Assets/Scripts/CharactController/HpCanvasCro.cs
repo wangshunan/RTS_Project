@@ -8,10 +8,10 @@ public class HpCanvasCro : MonoBehaviour {
     [SerializeField]
     Status status;
 
-    private Camera rotateCamera;
     private Slider hpSlider;
     private GameObject parentObject;
     private Canvas canvas;
+
     private float countDown;
     private const float COUNT_DOWN_MAX = 2;
 
@@ -25,7 +25,6 @@ public class HpCanvasCro : MonoBehaviour {
 
     private void Start()
     {
-        rotateCamera = Camera.main;
         hpSlider.maxValue = status.hp;
         hpSlider.value = status.hp;
         canvas.enabled = false;
@@ -40,11 +39,13 @@ public class HpCanvasCro : MonoBehaviour {
         hpSlider.value = status.hp;
     }
 
+    // カメラに向く
     private void LookAtCamera()
     {
-        transform.rotation = rotateCamera.transform.rotation;
+        transform.rotation = Camera.main.transform.rotation;
     }
 
+    // HP表示時間カウント
     private void CountDown()
     {
         if (hpSlider.value != status.hp)
@@ -58,6 +59,7 @@ public class HpCanvasCro : MonoBehaviour {
         }
     }
 
+    // HP表示
     private void DrawSlider()
     {
         if ( countDown > 0 )

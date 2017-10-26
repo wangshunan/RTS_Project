@@ -19,19 +19,24 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         anim = GetComponent<Animator>();
         baseSelectCro = GameObject.Find("GameSystem").GetComponent<BaseSelectCro>();
-        energieCro = GameObject.Find("EnergieSlider").GetComponent<EnergieUICro>();
+        energieCro = GameObject.Find("EnergieUI").GetComponent<EnergieUICro>();
     }
 
     public void OnPointerEnter( PointerEventData data ) 
     {
         anim.SetTrigger("Vectory");
         gameObject.transform.localScale *= 1.2f;
+
+        energieCro.SetCostGage(unitCost);
+
     }
 
     public void OnPointerExit( PointerEventData data )
     {
         anim.SetTrigger("UI_Idle");
         gameObject.transform.localScale /= 1.2f;
+
+        energieCro.SetCostGage(0f);
     }
 
     public void OnPointerClick( PointerEventData data )

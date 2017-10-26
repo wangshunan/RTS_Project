@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        GameStatusCheck();
+        GameStatusCheck(); // ゲームステート監視
     }
 
     public void GameStatusCheck()

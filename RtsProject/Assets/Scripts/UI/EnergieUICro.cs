@@ -6,21 +6,26 @@ using UnityEngine.UI;
 public class EnergieUICro : MonoBehaviour {
 
     [SerializeField]
-    public Slider energie;
+    public Slider energie; // エネルギーゲージ
+
+    [SerializeField]
+    public Slider costGage; // コストゲージ
 
     [SerializeField]
     GameManager gameManager;
 
-    private float energieSpeed;
+    private float energieSpeed; // ゲージ回復スピード
 
     private void Awake()
     {
-        energie = GetComponent<Slider>();
+        costGage = transform.FindChild("CostSlider").GetComponent<Slider>();
+        energie = transform.FindChild("EnergieSlider").GetComponent<Slider>();
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
     }
 
     private void Start()
     {
+        costGage.value = 0;
         energie.value = 0;
         energieSpeed = 1.5f;
     }
@@ -38,8 +43,14 @@ public class EnergieUICro : MonoBehaviour {
         }
     }
 
+    // エネルギー回復
     public void ConsumeEnergie( float unitCost )
     {
         energie.value -= unitCost;
+    }
+
+    public void SetCostGage( float unitCost )
+    {
+        costGage.value = unitCost;
     }
 }
