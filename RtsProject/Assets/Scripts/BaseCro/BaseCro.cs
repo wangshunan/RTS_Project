@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class BaseCro : MonoBehaviour {
 
+    [SerializeField]
+    SelectTargetManager selectTargetManager;
+
     private Vector3 instPos;
     private string playerPreLink; // unit ファイルリンク
     private string enemyPreLink; // unit ファイルリンク
@@ -14,6 +17,7 @@ public class BaseCro : MonoBehaviour {
     private void Awake()
     {
         render = GetComponent<Renderer>();
+        selectTargetManager = GameObject.Find("GameSystem").GetComponent<SelectTargetManager>();
         playerPreLink = "Prefabs/Unit/PlayerTeam/";
         enemyPreLink = "Prefabs/Unit/EnemyTeam/";
     }
@@ -39,6 +43,8 @@ public class BaseCro : MonoBehaviour {
         var obj = Instantiate(unit, instPos, transform.rotation);
         obj.tag = unitTag;
         obj.name = name;
+
+        selectTargetManager.AddUnits(obj);
     }
 
     //　Enemyユニット生産

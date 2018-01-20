@@ -14,7 +14,10 @@ public class ObjNameManager : MonoBehaviour {
     public const string UNIT_PLAYER_TAG = "Player";
     public const string UNIT_ENEMY_TAG = "Enemy";
 
-    // Status
+    // UI
+    public const string UNIT_UI_TAG = "UI";
+
+    // UnitStatus
     public const string STATUS_DEAD_TAG = "Dead";
 
     // UnitName

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class AnimStateCro : MonoBehaviour {
 
     [SerializeField]
-    Status status; // ステータス
+    UnitStatus status; // ステータス
 
     [SerializeField]
     NavMeshAgent nav; // ナビゲーション
@@ -30,7 +30,7 @@ public class AnimStateCro : MonoBehaviour {
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
  
         animator = GetComponent<Animator>();
-        status = GetComponent<Status>();
+        status = GetComponent<UnitStatus>();
         nav = GetComponent<NavMeshAgent>();
 
         attack[0] = Animator.StringToHash("Attack1");
@@ -87,7 +87,7 @@ public class AnimStateCro : MonoBehaviour {
     }
 
     // Attackアニメーション
-    public void SetAttack( Status.UnitType type )
+    public void SetAttack( UnitStatus.UnitType type )
     {
         if ( gameObject.tag == ObjNameManager.STATUS_DEAD_TAG ) {
             return;
@@ -95,15 +95,15 @@ public class AnimStateCro : MonoBehaviour {
 
         switch (type)
         {
-            case Status.UnitType.Strike:
+            case UnitStatus.UnitType.Strike:
                 StrikeAtkAnim();
                 break;
 
-            case Status.UnitType.Shot:
+            case UnitStatus.UnitType.Shot:
                 ShotAtkAnim();
                 break;
 
-            case Status.UnitType.Fly:
+            case UnitStatus.UnitType.Fly:
                 FlyAtkAnim();
                 break;
         }
@@ -117,9 +117,9 @@ public class AnimStateCro : MonoBehaviour {
 
     private void ShotAtkAnim()
     {
-        Status.UnitType targetType = status.target.GetComponent<Status>().type;
+        UnitStatus.UnitType targetType = status.target.GetComponent<UnitStatus>().type;
 
-        if ( targetType == Status.UnitType.Fly )
+        if ( targetType == UnitStatus.UnitType.Fly )
         {
             animator.SetTrigger(attack[1]);
         }

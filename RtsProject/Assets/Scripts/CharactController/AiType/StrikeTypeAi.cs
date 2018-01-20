@@ -7,8 +7,8 @@ public class StrikeTypeAi : AiCro {
 
     private void Start()
     {
-        targets = new List<GameObject>();
-        status.type = Status.UnitType.Strike;
+        AiCroInitialization();
+        status.type = UnitStatus.UnitType.Strike;
     }
 
     private void Update()
@@ -45,8 +45,8 @@ public class StrikeTypeAi : AiCro {
 
             for ( int i = 0; i < enemys.Length; i++ )
             {
-                var targetType = enemys[i].GetComponent<Status>().type;
-                if (targetType != Status.UnitType.Fly)
+                var targetType = enemys[i].GetComponent<UnitStatus>().type;
+                if (targetType != UnitStatus.UnitType.Fly)
                 {
                     targets.Add(enemys[i]);
                 }
@@ -58,8 +58,8 @@ public class StrikeTypeAi : AiCro {
             enemys = GameObject.FindGameObjectsWithTag(ObjNameManager.UNIT_PLAYER_TAG);
             for (int i = 0; i < enemys.Length; i++)
             {
-                var targetType = enemys[i].GetComponent<Status>().type;
-                if (targetType != Status.UnitType.Fly)
+                var targetType = enemys[i].GetComponent<UnitStatus>().type;
+                if (targetType != UnitStatus.UnitType.Fly)
                 {
                     targets.Add(enemys[i]);
                 }

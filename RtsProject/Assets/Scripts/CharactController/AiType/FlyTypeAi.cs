@@ -7,8 +7,8 @@ public class FlyTypeAi : AiCro
 
     private void Start()
     {
-        targets = new List<GameObject>();
-        status.type = Status.UnitType.Fly;
+        AiCroInitialization();
+        status.type = UnitStatus.UnitType.Fly;
     }
 
     private void Update()

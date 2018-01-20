@@ -40,11 +40,11 @@ public class SheelCro : MonoBehaviour {
             return;
         }
 
-        Status.UnitType targetType = target.GetComponent<Status>().type;
+        UnitStatus.UnitType targetType = target.GetComponent<UnitStatus>().type;
         float movespeed = speed * Time.deltaTime;
         var targetPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
 
-        if ( targetType == Status.UnitType.Fly )
+        if ( targetType == UnitStatus.UnitType.Fly )
         {
             targetPos = target.transform.FindChild("Hips/BodyPos").transform.position; 
         }

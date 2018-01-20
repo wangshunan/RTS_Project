@@ -8,14 +8,24 @@ public class MousClickCro : MonoBehaviour {
     BaseSelectCro baseSelectCro;
 
     [SerializeField]
+    SelectTargetManager selectTargetManager;
+
+    [SerializeField]
     GameManager gameManager;
 
-    private GameObject clickTarget;
+    public GameObject clickTarget;
+
+    private bool selected;
+    private Vector3 startPos = new Vector3();
+    private Vector3 endPos = new Vector3();
 
     private void Awake()
     {
         baseSelectCro = GetComponent<BaseSelectCro>();
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
+        selectTargetManager = GameObject.Find("GameSystem").GetComponent<SelectTargetManager>();
+
+        selected = false;
     }
 
     private void Start()
@@ -29,10 +39,47 @@ public class MousClickCro : MonoBehaviour {
             return;
         }
 
-        MouserClickCro();
-    } 
+        MouseSelectCro();
+        MouseClickCro();
+    }
 
-    private void MouserClickCro()
+    private void MouseSelectCro()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            startPos = Input.mousePosition;
+            selected = true;
+
+            selectTargetManager.SelectedUnitsClear();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            selected = false;
+        }
+
+
+        if (selected)
+        {
+
+            endPos = Input.mousePosition;
+            foreach (GameObject g in selectTargetManager.units)
+            {
+                Vector3 tempPos = Camera.main.WorldToScreenPoint(g.transform.position);
+
+                if (tempPos.x > startPos.x && tempPos.x < endPos.x && tempPos.y < startPos.y && tempPos.y > endPos.y)
+                {
+                    if (g != null)
+                    {
+                        selectTargetManager.AddSelectedUnits(g);
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void MouseClickCro()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -46,6 +93,31 @@ public class MousClickCro : MonoBehaviour {
                 {
                     clickTarget = hit.collider.gameObject;
                     baseSelectCro.SetTarget(clickTarget);
+                }
+
+                if ( hit.collider.gameObject.tag == ObjNameManager.UNIT_PLAYER_TAG )
+                {
+                    selectTargetManager.SelectedUnitsClear();
+                    selectTargetManager.AddSelectedUnits(hit.collider.gameObject);
+                }
+
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1) ) {
+
+            Ray ray = new Ray();
+            RaycastHit hit = new RaycastHit();
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.gameObject.name == ObjNameManager.BASE_ENEMY_NAME)
+                {
+                    foreach (GameObject g in selectTargetManager.selectedUnits)
+                    {
+                        g.GetComponent<UnitStatus>().target = hit.collider.gameObject;
+                    }
                 }
             }
         }

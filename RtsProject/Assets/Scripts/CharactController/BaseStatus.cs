@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Status : MonoBehaviour {
+public class BaseStatus : MonoBehaviour {
 
     [SerializeField]
     BaseInvadCro baseInvad;
+
+    [SerializeField]
 
     public enum UnitType
     {
@@ -25,6 +27,7 @@ public class Status : MonoBehaviour {
     public float atkDistance;
     public float speed;
 
+    // unit状態
     public bool isdead;
     public bool attacked;
     public UnitType type;

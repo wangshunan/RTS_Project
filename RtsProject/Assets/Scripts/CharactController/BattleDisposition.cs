@@ -5,32 +5,37 @@ using UnityEngine;
 public class BattleDisposition : MonoBehaviour { 
 
     [SerializeField]
-    Status status;
+    UnitStatus unitStatus;
+
+    [SerializeField]
+    BaseStatus baseStatus;
 
     // 弾のターゲット
     public GameObject shellTarget;
 
     private void Awake () {
-        status = GetComponent<Status>();
+        unitStatus = GetComponent<UnitStatus>();
+        baseStatus = GetComponent<BaseStatus>();
     }
 
     // attack
     private void Hit() {
 
-        var targetBatCro = status.target.GetComponent<BattleDisposition>();
 
-        if ( targetBatCro == null )
+        if ( unitStatus.target == null )
         {
             return;
         }
 
-        if ( status.target.tag == "Base" )
+        var targetBatCro = GetComponent<BattleDisposition>();
+
+        if (unitStatus.target.tag == "Base" )
         {
-            targetBatCro.BaseGetHit(status.atk, gameObject.tag);
+            //targetBatCro.BaseGetHit(unitStatus.atk, gameObject.tag);
             return;
         }
 
-        targetBatCro.GetHit(status.atk);
+        targetBatCro.GetHit(unitStatus.atk);
 
     }
 
@@ -57,11 +62,11 @@ public class BattleDisposition : MonoBehaviour {
         shellCro.parentTag = gameObject.tag;
 
         // FlytypeかどうかAtkの設定
-        if ( shellTarget.GetComponent<Status>().type == Status.UnitType.Fly ) {
+        if ( shellTarget.GetComponent<UnitStatus>().type == UnitStatus.UnitType.Fly ) {
             shellPos = gameObject.transform.FindChild("ShellPos_Fly").gameObject;
-            shellCro.damage = status.atk * 2;
+            shellCro.damage = unitStatus.atk * 2;
         } else {
-            shellCro.damage = status.atk;
+            shellCro.damage = unitStatus.atk;
         }
 
         shellCro.target = shellTarget;
@@ -72,22 +77,22 @@ public class BattleDisposition : MonoBehaviour {
     // Attackリセット
     private void AttackReset()
     {
-        status.attacked = false;
+        unitStatus.attacked = false;
     }
 
     public void GetHit( int damage )
     {
-        status.GetDamage( damage );
+        unitStatus.GetDamage( damage );
     }
 
     public void BaseGetHit( int damage, string unitTag )
     {
 
-        status.GetDamage(damage);
+        baseStatus.GetDamage(damage);
 
-        if ( status.hp <= 0 )
+        if ( baseStatus.hp <= 0 )
         {
-            status.killerTag = unitTag;
+            baseStatus.killerTag = unitTag;
         }
     }
 

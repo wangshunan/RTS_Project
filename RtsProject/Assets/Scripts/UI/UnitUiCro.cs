@@ -14,6 +14,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public float unitCost;
 
     private Animator anim;
+    private const float OFFSET = 1.2f;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter( PointerEventData data ) 
     {
         anim.SetTrigger("Vectory");
-        gameObject.transform.localScale *= 1.2f;
+        gameObject.transform.localScale *= OFFSET;
 
         energieCro.SetCostGage(unitCost);
 
@@ -34,7 +35,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerExit( PointerEventData data )
     {
         anim.SetTrigger("UI_Idle");
-        gameObject.transform.localScale /= 1.2f;
+        gameObject.transform.localScale /= OFFSET;
 
         energieCro.SetCostGage(0f);
     }

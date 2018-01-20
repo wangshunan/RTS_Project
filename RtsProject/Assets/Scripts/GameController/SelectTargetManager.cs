@@ -1,0 +1,41 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SelectTargetManager : MonoBehaviour {
+
+    private ArrayList _units;
+    private ArrayList _selectedUnits;
+
+    public ArrayList units { get { return _units; } }
+    public ArrayList selectedUnits { get { return _selectedUnits; } }
+
+    private void Awake()
+    {
+        _units = new ArrayList();
+        _selectedUnits = new ArrayList();
+    }
+
+    public void AddUnits(GameObject unit)
+    {
+        units.Add(unit);
+    }
+
+    public void AddSelectedUnits(GameObject selectedUnit)
+    {
+        selectedUnits.Add(selectedUnit);
+        if (!selectedUnit.GetComponent<SelectCro>().isSelected)
+        {
+            selectedUnit.GetComponent<SelectCro>().Select();
+        }
+    }
+
+    public void SelectedUnitsClear()
+    {
+        foreach ( GameObject g in selectedUnits )
+        {
+            g.GetComponent<SelectCro>().Deselect();
+        }
+        selectedUnits.Clear();
+    }
+}

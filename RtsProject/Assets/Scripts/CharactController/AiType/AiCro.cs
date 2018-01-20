@@ -9,20 +9,26 @@ public class AiCro : MonoBehaviour {
 
     protected BattleDisposition battleCro;
     protected NavCro navController;
-    protected Status status;
+    protected UnitStatus status;
     protected AnimStateCro anim;
     protected List<GameObject> targets;
 
     public int searchDistance; // 索敵範囲
 
-    protected virtual void Awake()
+    protected void AiCroInitialization()
     {
         navController = GetComponent<NavCro>();
-        status = GetComponent<Status>();
+        status = GetComponent<UnitStatus>();
         anim = GetComponent<AnimStateCro>();
         gameManager = GameObject.Find("GameSystem").GetComponent<GameManager>();
         battleCro = GetComponent<BattleDisposition>();
+
+        targets = new List<GameObject>();
+
+        SearchBase();
+        navController.SetTarget(status.target);
     }
+
 
     // Base捜索
     protected void SearchBase()
@@ -95,6 +101,7 @@ public class AiCro : MonoBehaviour {
 
     protected void TargetCheck()
     {
+
         if (targets.Count > 0)
         {
 
@@ -122,7 +129,15 @@ public class AiCro : MonoBehaviour {
 
             if (tmpTarget.tag == ObjNameManager.BASE_TAG)
             {
-                status.target = tmpTarget;
+                if (status.target == null)
+                {
+                    status.target = tmpTarget;
+                }
+
+                if (status.target != null && status.target.tag != ObjNameManager.BASE_TAG)
+                {
+                    status.target = tmpTarget;
+                }
             }
 
             targets.Clear();

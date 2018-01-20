@@ -7,8 +7,8 @@ public class ShotTypeAi : AiCro
 
     private void Start()
     {
-        targets = new List<GameObject>();
-        status.type = Status.UnitType.Shot;
+        AiCroInitialization();
+        status.type = UnitStatus.UnitType.Shot;
     }
 
     private void Update()

@@ -9,12 +9,12 @@ public class NavCro : MonoBehaviour
     private NavMeshAgent agent; // navMeshAgent
 
     [SerializeField]
-    private Status status;
+    private UnitStatus status;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        status = GetComponent<Status>();
+        status = GetComponent<UnitStatus>();
     }
 
     private void Start()
@@ -57,4 +57,5 @@ public class NavCro : MonoBehaviour
     {
         agent.SetDestination(target.transform.position);
     }
-}
+
+ }
