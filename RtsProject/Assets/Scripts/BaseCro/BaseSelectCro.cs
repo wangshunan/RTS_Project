@@ -38,7 +38,7 @@ public class BaseSelectCro : MonoBehaviour {
     }
 
     // 選択されたBaseにUnit生産
-    public void ProUnit( string unitName )
+    public void ProUnit( string unitName, Vector3 unitPos )
     {
         if (selectBaseTarget == null )
         {
@@ -47,6 +47,6 @@ public class BaseSelectCro : MonoBehaviour {
 
         var targetCro = selectBaseTarget.GetComponent<BaseCro>();
 
-        targetCro.PlayerProductionUnit( unitName, ObjNameManager.UNIT_PLAYER_TAG );
+        targetCro.PlayerProductionUnit( unitName, ObjNameManager.UNIT_PLAYER_TAG, unitPos );
     }
 }

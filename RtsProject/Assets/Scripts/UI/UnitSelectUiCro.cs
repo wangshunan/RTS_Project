@@ -14,6 +14,11 @@ public class UnitSelectUiCro : MonoBehaviour {
         selectUIAnim = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void OnSelectPanel()
     {
         selectUIAnim.SetBool(select,true);

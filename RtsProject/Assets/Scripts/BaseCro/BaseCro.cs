@@ -35,12 +35,12 @@ public class BaseCro : MonoBehaviour {
     }
 
     // Playerユニット生産
-    public void PlayerProductionUnit( string name, string unitTag )
+    public void PlayerProductionUnit( string name, string unitTag, Vector3 pos )
     {
         string unitLink = string.Concat(playerPreLink, name);
         GameObject unit = Resources.Load(unitLink) as GameObject;
 
-        var obj = Instantiate(unit, instPos, transform.rotation);
+        var obj = Instantiate(unit, pos, transform.rotation);
         obj.tag = unitTag;
         obj.name = name;
 
