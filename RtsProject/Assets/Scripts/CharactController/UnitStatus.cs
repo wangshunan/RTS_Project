@@ -3,41 +3,88 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class UnitStatus : MonoBehaviour {
+public class UnitStatus : MonoBehaviour
+{
 
-    public enum UnitType
-    {
-        Strike,
-        Shot,
-        Fly
-    }
+	[SerializeField]
+	BaseInvadCro baseInvad;
 
-    public GameObject target;
-    public GameObject mainBaseTarget;
+	public enum UnitType
+	{
+		Strike,
+		Shot,
+		Fly,
+		Base
+	}
 
-    // status
-    public int hp;
-    public int atk;
-    public float atkDistance;
-    public float speed;
+	// Public
+	public int hp;
+	public int atk;
+	public float atkDistance;
+	public float speed;
+	public bool isdead;
+	public bool attacked;
+	public GameObject target;
+	public GameObject mainBaseTarget;
+	public UnitType type;
+	public string killerTag;
 
-    // unit状態
-    public bool isdead;
-    public bool attacked;
-    public UnitType type;
+	// Private
+	private AnimStateCro anim;
+	private const int MAX_HP = 100;
 
-    private AnimStateCro anim;
-    private const int MAX_HP = 100;
+	private void Awake()
+	{
+		anim = GetComponent<AnimStateCro>();
+		baseInvad = GameObject.Find("GameSystem").GetComponent<BaseInvadCro>();
+		isdead = false;
+		attacked = false;
+	}
 
-    private void Awake () {
-        isdead = false;
-        attacked = false;
-    }
+	private void Update()
+	{
+		if (isdead == true)
+		{
+			return;
+		}
 
-    public void GetDamage( int damage )
-    {
-        hp -= damage;
-    }
+		StatusUpdate();
+	}
 
+	public void GetDamage(int damage)
+	{
+		hp -= damage;
+	}
+
+	private void StatusUpdate()
+	{
+		if (hp <= 0)
+		{
+			if (type == UnitType.Base)
+			{
+				BaseInvaded();
+			}
+			else
+			{
+				StartCoroutine(IsDead());
+			}
+		}
+	}
+
+	public void BaseInvaded()
+	{
+		gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;
+		baseInvad.BaseDestroy(gameObject, killerTag);
+	}
+
+	private IEnumerator IsDead()
+	{
+		anim.SetDead();
+		isdead = true;
+		gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;
+		GetComponent<NavCro>().Destroy();
+		yield return new WaitForSeconds(3);
+		Destroy(gameObject);
+	}
 
 }

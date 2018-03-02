@@ -55,6 +55,7 @@ public class AnimStateCro : MonoBehaviour {
     void AnimaStateUpdate()
     {
         animState = animator.GetCurrentAnimatorStateInfo(0);
+
     }
 
     // StateCro
@@ -117,9 +118,18 @@ public class AnimStateCro : MonoBehaviour {
 
     private void ShotAtkAnim()
     {
-        UnitStatus.UnitType targetType = status.target.GetComponent<UnitStatus>().type;
+		UnitStatus.UnitType targetType;
 
-        if ( targetType == UnitStatus.UnitType.Fly )
+		if (status.target.GetComponent<UnitStatus>() != null)
+		{
+			targetType = status.target.GetComponent<UnitStatus>().type;
+		}
+		else
+		{
+			targetType = UnitStatus.UnitType.Base;
+		}
+
+			if ( targetType == UnitStatus.UnitType.Fly )
         {
             animator.SetTrigger(attack[1]);
         }

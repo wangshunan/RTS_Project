@@ -20,12 +20,13 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     private GameObject clone;
     private const float OFFSET = 1.2f;
     private bool selected = false;
+    private bool isProduction = false;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         baseSelectCro = GameObject.Find("GameSystem").GetComponent<BaseSelectCro>();
-        energieCro = GameObject.Find("EnergieUI").GetComponent<EnergieUICro>();
+        energieCro = GameObject.Find("UnitSelectPanel").transform.FindChild("EnergieUI").GetComponent<EnergieUICro>();
         UnitPanel = GameObject.Find("UnitSelectPanel").GetComponent<UnitSelectUiCro>();
     }
 
@@ -67,8 +68,8 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             UnitClone();
             anim.SetTrigger("Vectory");
             gameObject.transform.localScale *= OFFSET;
-            UnitPanel.OffSelectPanel();
-        }
+            UnitPanel.OnUnitUiSelection();
+		}
     }
 
     //　ユニット生産コントロール
@@ -79,31 +80,40 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             return;
         }
 
-        Ray ray = new Ray();
+		energieCro.SetCostGage(unitCost);
+
+		Ray ray = new Ray();
         RaycastHit hit = new RaycastHit();
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.tag == "Ground")
+            if (hit.collider.gameObject.tag == "Test")
             {
                 clone.transform.position = hit.point;
+                isProduction = true;
             }
-
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isProduction == true)
         {
-            baseSelectCro.ProUnit(gameObject.name, clone.transform.position);
-            energieCro.ConsumeEnergie(unitCost);
+            if (energieCro.energie.value >= unitCost)
+            {
+                baseSelectCro.ProUnit(gameObject.name, clone.transform.position);
+                energieCro.ConsumeEnergie(unitCost);
+            }
         }
+
 
         if (Input.GetMouseButtonDown(1))
         {
             selected = false;
+            isProduction = false;
             Destroy(clone);
-            UnitPanel.OnSelectPanel();
-        }
+            UnitPanel.OffUnitUiSelection();
+			energieCro.SetCostGage(0f);
+			gameObject.transform.localScale /= OFFSET;
+		}
 
     }
 
@@ -111,7 +121,7 @@ public class UnitUiCro : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         clone = GameObject.Instantiate(gameObject) as GameObject;
         clone.transform.localScale = new Vector3( 0.7f, 0.7f, 0.7f );
-        Destroy( clone.GetComponent <UnitUiCro> ());
+		Destroy( clone.GetComponent <UnitUiCro> ());
     }
 
 }

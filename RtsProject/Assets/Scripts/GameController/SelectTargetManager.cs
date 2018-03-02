@@ -34,6 +34,11 @@ public class SelectTargetManager : MonoBehaviour {
     {
         foreach (GameObject g in _selectedUnits)
         {
+			if (g == null)
+			{
+				continue;
+			}
+
             if (selectedUnit.GetComponent<SelectCro>().isSelected && g == selectedUnit)
             {
                 selectedUnit.GetComponent<SelectCro>().Deselect();
@@ -45,6 +50,7 @@ public class SelectTargetManager : MonoBehaviour {
     {
         foreach ( GameObject g in selectedUnits )
         {
+			if ( g != null )
             g.GetComponent<SelectCro>().Deselect();
         }
         selectedUnits.Clear();

@@ -13,6 +13,7 @@ public class BaseCro : MonoBehaviour {
     private string playerPreLink; // unit ファイルリンク
     private string enemyPreLink; // unit ファイルリンク
     private Renderer render; // baseRenderer
+	private GameObject unitProPanel;
 
     private void Awake()
     {
@@ -20,6 +21,12 @@ public class BaseCro : MonoBehaviour {
         selectTargetManager = GameObject.Find("GameSystem").GetComponent<SelectTargetManager>();
         playerPreLink = "Prefabs/Unit/PlayerTeam/";
         enemyPreLink = "Prefabs/Unit/EnemyTeam/";
+
+        if (gameObject.name == ObjNameManager.BASE_PLAYER_NAME)
+        {
+            unitProPanel = transform.FindChild("Plane").gameObject;
+            unitProPanel.SetActive(false);
+        }
     }
 
     // base初期化
@@ -27,7 +34,7 @@ public class BaseCro : MonoBehaviour {
     {
         // 生成pos
         instPos = transform.FindChild("InstPos").gameObject.transform.position;
-        if ( gameObject.name == ObjNameManager.BASE_ENEMY_NAME) {
+		if ( gameObject.name == ObjNameManager.BASE_ENEMY_NAME) {
             render.material.SetColor("_Color", Color.red);
         } else {
             render.material.SetColor("_Color", Color.white);
@@ -56,5 +63,15 @@ public class BaseCro : MonoBehaviour {
         unit.tag = unitTag;
         Instantiate(unit, instPos, transform.rotation);
     }
+
+	public void OnUnitProPanel()
+	{
+        unitProPanel.SetActive(true);
+	}
+
+	public void OffUnitProPanel()
+	{
+        unitProPanel.SetActive(false);
+	}
 
 }

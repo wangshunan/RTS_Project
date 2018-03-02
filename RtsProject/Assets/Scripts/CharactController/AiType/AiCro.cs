@@ -101,6 +101,10 @@ public class AiCro : MonoBehaviour {
 
     protected void TargetCheck()
     {
+        if ( status.attacked )
+        {
+            return;
+        }
 
         if (targets.Count > 0)
         {

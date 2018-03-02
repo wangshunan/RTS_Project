@@ -27,11 +27,11 @@ public class BattleDisposition : MonoBehaviour {
             return;
         }
 
-        var targetBatCro = GetComponent<BattleDisposition>();
+        var targetBatCro = unitStatus.target.GetComponent<BattleDisposition>();
 
         if (unitStatus.target.tag == "Base" )
         {
-            //targetBatCro.BaseGetHit(unitStatus.atk, gameObject.tag);
+            targetBatCro.BaseGetHit(unitStatus.atk, gameObject.tag);
             return;
         }
 
@@ -61,8 +61,8 @@ public class BattleDisposition : MonoBehaviour {
         var shellCro = shell.GetComponent<SheelCro>();
         shellCro.parentTag = gameObject.tag;
 
-        // FlytypeかどうかAtkの設定
-        if ( shellTarget.GetComponent<UnitStatus>().type == UnitStatus.UnitType.Fly ) {
+        // ShotTypeの目標はFlytypeかどうかのAtkの設定
+        if (shellTarget.GetComponent<UnitStatus>() != null && shellTarget.GetComponent<UnitStatus>().type == UnitStatus.UnitType.Fly ) {
             shellPos = gameObject.transform.FindChild("ShellPos_Fly").gameObject;
             shellCro.damage = unitStatus.atk * 2;
         } else {
@@ -87,13 +87,15 @@ public class BattleDisposition : MonoBehaviour {
 
     public void BaseGetHit( int damage, string unitTag )
     {
+		if (baseStatus != null)
+		{
+			baseStatus.GetDamage(damage);
 
-        baseStatus.GetDamage(damage);
-
-        if ( baseStatus.hp <= 0 )
-        {
-            baseStatus.killerTag = unitTag;
-        }
+			if (baseStatus.hp <= 0)
+			{
+				baseStatus.killerTag = unitTag;
+			}
+		}
     }
 
 }

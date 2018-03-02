@@ -2,47 +2,53 @@ script目次案内
 
 Asset
   |
-  +--Scripts Folder
+  +--Scripts
         |
-	+--GameSystem Folder
+	+--GameSystem Folder　// ゲームシステム管理
 	|	   |
 	|          +--- GameManager.cs      // ゲームステートを管理、制御する。
 	|	   +--- GameTimeManager.cs  // ゲームの制限タイムを管理する。
         |          +--- GameTimeCountCro.cs // ゲーム制限時間のカウント計算、タイムデータを管理する。
 　　　　|　　　　　+--- ObjNameManager.cs   // ゲーム内で、よく使われるオブジェクトの名前やタグなどの統一管理。
         | 
-	+--CharactController Folder
+	+--CharactController Folder　// ユニット行動関する処理
 	|	   |
-	|	   +--- AiType Folder
+	|	   +--- AiType Folder　// ユニット各タイプの処理
 	|	   |	     |
-	|	   |         +--- StrikeTypeAi.cs      // 接近戦闘タイプユニットの行動AIをコントロールする。
-	|	   |	     +--- ShotTypeAi.cs        // 遠距離タイプユニットの行動AIをコントロールする。
-	|	   |         +--- FlyTypeAi.cs         // 飛行タイプユニットの行動AIをコントロールする。
-	|          +------------- AnimStateCro.cs      // キャラクターのAnimatorを管理し、制御する
-        |          +------------- Status.cs            // キャラクターのステータスを管理する
+	|	   |         +--- StrikeTypeAi.cs      // 接近戦闘タイプユニットの行動AI。
+	|	   |	     +--- ShotTypeAi.cs        // 遠距離タイプユニットの行動AI。
+	|	   |         +--- FlyTypeAi.cs         // 飛行タイプユニットの行動AI。
+　　　　|          |         +--- AiCro.cs             // Ai共通行動処理、各タイプの継承用。
+        |          +--ShellController Folder  // 弾の制御
+	|	             |
+	|	             +------- ShellCro.cs      // ShotTypeのユニットが発射した弾の制御する。
+	|          +------------- AnimStateCro.cs      // キャラクターのAnimatorの制御。
+        |          +------------- UnitStatus.cs        // ユニットのステータス管理。
+        |          +------------- BaseStatus.cs        // 拠点のステータス管理。
 	|	   +------------- NavCro.cs　　　      // ナビゲーションを管理し、制御する。
 	|          +------------- BattleDisposition.cs // 戦闘の処理を制御する。
 	|	   +------------- HpCanvasCro.cs       // キャラクターのHP表示UIを制御する。
+　　　　|          +------------- SelecetCro.cs　      // ユニットが選択されたときの処理。
 	|
-	+--BaseCro Folder
+	+--BaseCro Folder // 拠点の管理
 	|	   |
         |          +------------- BaseCro.cs       // 拠点の管理と制御。
         |          +------------- BaseInvadCro.cs　// 拠点を占拠する時の処理。
 	|	   +------------- BaseSelectCro.cs // 拠点を選択するの処理。
 	|
-	+--Input Folder
-	|	|
-	|	+------- MousClickCro.cs // マウスをクリックするときの処理。
+　　　　+-- GameCrontroller // ゲーム操作管理
+        |       |
+	|       +--Input Folder // 入力管理
+	|	        |
+	|	        +------- MousClickCro.cs        // マウス操作に関する処理。
+        |               +------- SelectTargetManager.cs // マウスでユニットを選択するとき対象管理の処理。
 	|
-	+--EnemyAi Folder
+	+--EnemyAi Folder  // 敵のＡＩ行動
 	|	|
 	|	+------- AIController.cs // 敵のAIの制御する。
 	|
-	+--ShellController Folder
-	|	|
-	|	+------- ShellCro.cs     // ShotTypeのユニットが発射した弾の制御する。
 	|
-	+--UI Folder
+	+--UI Folder // UIの管理
 	|	|
 	|	+------- EnergieUICro.cs    // ユニット生産必要なゲージの制御する。
 	|	+------- ScoreCro.cs        // スコアの制御。
@@ -53,4 +59,4 @@ Asset
 	|
 	+--DemoScripts Folder
 		|
-		+------- MenuCro.cs         // デモ版臨時用UIの制御。
+		+------- MenuCro.cs         // デモ版臨時用UIメニューの制御。

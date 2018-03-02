@@ -8,8 +8,6 @@ public class BaseStatus : MonoBehaviour {
     [SerializeField]
     BaseInvadCro baseInvad;
 
-    [SerializeField]
-
     public enum UnitType
     {
         Strike,
@@ -19,28 +17,21 @@ public class BaseStatus : MonoBehaviour {
     }
 
     public GameObject target;
-    public GameObject mainBaseTarget;
 
     // status
+    [Range (0,100)]
     public int hp;
-    public int atk;
-    public float atkDistance;
-    public float speed;
 
     // unit状態
     public bool isdead;
-    public bool attacked;
     public UnitType type;
     public string killerTag;
 
-    private AnimStateCro anim;
     private const int MAX_HP = 100;
 
     private void Awake () {
-        anim = GetComponent<AnimStateCro>();
         baseInvad = GameObject.Find("GameSystem").GetComponent<BaseInvadCro>();
         isdead = false;
-        attacked = false;
     }
 
     private void Update ()
@@ -62,12 +53,7 @@ public class BaseStatus : MonoBehaviour {
     {
         if ( hp <= 0 )
         {
-            if ( type == UnitType.Base )
-            {
-                BaseInvaded();
-            } else {
-                StartCoroutine(IsDead());
-            }
+          BaseInvaded();
         }
     }
 
@@ -76,16 +62,6 @@ public class BaseStatus : MonoBehaviour {
     {
         gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;
         baseInvad.BaseDestroy(gameObject, killerTag);
-    }
-
-    private IEnumerator IsDead()
-    {
-        anim.SetDead();
-        isdead = true;
-        gameObject.tag = ObjNameManager.STATUS_DEAD_TAG;
-        GetComponent<NavCro>().Destroy();
-        yield return new WaitForSeconds(3);
-        Destroy(gameObject);
     }
 
 }

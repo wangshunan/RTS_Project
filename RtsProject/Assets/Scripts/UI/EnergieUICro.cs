@@ -39,7 +39,7 @@ public class EnergieUICro : MonoBehaviour {
 
         if ( energie.value < energie.maxValue )
         {
-            energie.value += Time.deltaTime / energieSpeed;
+            energie.value += Time.deltaTime / energieSpeed * 2;
         }
     }
 

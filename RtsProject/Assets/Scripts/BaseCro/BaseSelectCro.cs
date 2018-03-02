@@ -26,6 +26,7 @@ public class BaseSelectCro : MonoBehaviour {
 
         selectBaseTarget = target;
         selectBaseTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+		selectBaseTarget.GetComponent<BaseCro>().OnUnitProPanel();
         unitSelectCro.OnSelectPanel();
     }
 
@@ -33,7 +34,8 @@ public class BaseSelectCro : MonoBehaviour {
     public void ResetTarget()
     {
         selectBaseTarget.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-        unitSelectCro.OffSelectPanel();
+		selectBaseTarget.GetComponent<BaseCro>().OffUnitProPanel();
+		unitSelectCro.OffSelectPanel();
         selectBaseTarget = null;
     }
 

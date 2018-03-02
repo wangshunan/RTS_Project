@@ -16,6 +16,7 @@ public class AIController : MonoBehaviour
     public GameObject targetBase;
 
     private float count; // 生成カウント
+	private float timeCount;
     private float specialCount; // 特殊ユニットの生成カウント
     private string unitName;
 
@@ -30,6 +31,7 @@ public class AIController : MonoBehaviour
         baseCro = new List<BaseCro>();
         unitName = "Footman";
         count = 0;
+		timeCount = 0;
         specialCount = 0;
     }
 
@@ -48,8 +50,9 @@ public class AIController : MonoBehaviour
     private void UnitProduction()
     {
         count += Time.deltaTime;
+		timeCount += Time.deltaTime;
 
-        if ( count >= 5 )
+		if ( count >= 4 )
         {
             for ( int i = 0; i < baseCro.Count; i++ )
             {
@@ -60,7 +63,7 @@ public class AIController : MonoBehaviour
             count = 0;
         }
 
-        if ( specialCount == 4 )
+        if ( specialCount == 3 )
         {
             for (int i = 0; i < baseCro.Count; i++)
             {
@@ -70,7 +73,7 @@ public class AIController : MonoBehaviour
             specialCount++;
         } 
 
-        if ( specialCount == 10 )
+        if ( specialCount == 5 )
         {
             for (int i = 0; i < baseCro.Count; i++)
             {
@@ -80,7 +83,7 @@ public class AIController : MonoBehaviour
             specialCount = 0;
         }
 
-        if ( baseAmount.enemyBasesAmount == 1 )
+        if ( timeCount >= 3 )
         {
             unitName = "Knight";
         }

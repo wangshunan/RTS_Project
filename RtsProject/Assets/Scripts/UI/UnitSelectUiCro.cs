@@ -6,26 +6,38 @@ using UnityEngine.UI;
 public class UnitSelectUiCro : MonoBehaviour {
 
     private Animator selectUIAnim;
+    private int unitPanel = Animator.StringToHash("UnitPanel");
+	private int unitSelection = Animator.StringToHash("UnitSelection");
+	private bool _unitUiSelected;
+	public bool unitUiSelected { get { return _unitUiSelected; } }
 
-    private int select = Animator.StringToHash("UnitPanel");
-
-    private void Awake()
+	private void Awake()
     {
         selectUIAnim = GetComponent<Animator>();
-    }
-
-    private void Update()
-    {
-        
+		_unitUiSelected = false;
     }
 
     public void OnSelectPanel()
     {
-        selectUIAnim.SetBool(select,true);
+		_unitUiSelected = true;
+		selectUIAnim.SetBool(unitPanel, true);
     }
 
     public void OffSelectPanel()
     {
-        selectUIAnim.SetBool(select, false);
+		_unitUiSelected = false;
+		selectUIAnim.SetBool(unitPanel, false);
     }
+
+	public void OnUnitUiSelection()
+	{
+		_unitUiSelected = true;
+		selectUIAnim.SetBool(unitSelection, true);
+	}
+
+	public void OffUnitUiSelection()
+	{
+		_unitUiSelected = false;
+		selectUIAnim.SetBool(unitSelection, false);
+	}
 }
